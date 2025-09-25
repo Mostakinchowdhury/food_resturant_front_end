@@ -5,7 +5,7 @@ import Products from '@/components/menu/Products'
 import Search from '@/components/menu/Search'
 import { product_type } from '@/type/item'
 
-export const revalidate = 3600 / 36
+export const revalidate = 100
 export const metadata = {
   title: 'Restaurant Offers',
   description: 'Find the best restaurant offers and discounts'

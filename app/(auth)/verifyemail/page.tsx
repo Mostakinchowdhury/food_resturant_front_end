@@ -5,9 +5,9 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
-const SignPage = ({ searchParams }: { searchParams: { email: string } }) => {
+const SignPage = ({ searchParams }: { searchParams?: { email?: string } }) => {
   const router = useRouter()
-  const email = searchParams.email
+  const email = searchParams?.email
   const myForm = useRef<HTMLFormElement | null>(null)
   const [formdata, setFormdata] = useState<field_type>({
     field1: '',
@@ -46,6 +46,11 @@ const SignPage = ({ searchParams }: { searchParams: { email: string } }) => {
       field5: '',
       field6: ''
     })
+    if (!email) {
+      setError('email not found')
+      setIsLoading(false)
+      return
+    }
     setError('')
     setSuccess('')
     setIsLoading(true)
