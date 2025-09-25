@@ -292,7 +292,11 @@ const SignPage = ({ searchParams }: { searchParams?: { email?: string } }) => {
           {/* success message */}
           {success && (
             <p className="text-green-500 text-size1 font-normal">
-              {typeof success == 'string' ? success : Object.values(success)[0]}
+              {success && (
+                <p className="text-green-500 text-size1 font-normal">
+                  {typeof success === 'string' ? success : String(Object.values(success)[0])}
+                </p>
+              )}
             </p>
           )}
         </form>
