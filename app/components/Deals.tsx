@@ -1,4 +1,5 @@
 import { deals, deals_nav } from '@/lib/home_store'
+import { Route } from 'next'
 import Link from 'next/link'
 
 const Deals = ({ category }: { category: string }) => {
@@ -34,7 +35,7 @@ const Deals = ({ category }: { category: string }) => {
           })
           .map((item) => (
             <Link
-              href={item.href}
+              href={item.href as Route}
               key={item.id}
               className="h-[325px] w-full pl-6 pb-6 pr-3 flex flex-col justify-between items-stretch bg-no-repeat bg-cover bg-center rounded-lg overflow-hidden box-border"
               style={{ backgroundImage: `url('${item.path}')` }}
@@ -64,7 +65,7 @@ const Deals = ({ category }: { category: string }) => {
           })
           .map((item) => (
             <div key={item.id}>
-              <Link href={item.href} className="h-[150px] w-[150px] block">
+              <Link href={item.href as Route} className="h-[150px] w-[150px] block">
                 <div
                   className="h-[150px] w-[150px] bg-no-repeat bg-cover bg-center rounded-lg overflow-hidden box-border relative"
                   style={{ backgroundImage: `url(${item.path})` }}
