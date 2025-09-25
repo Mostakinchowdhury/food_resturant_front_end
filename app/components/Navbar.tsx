@@ -62,7 +62,7 @@ function Navbar() {
               Special Offers
             </Link>
           </li>
-          <li className="flexcontainer items-center">
+          {/* <li className="flexcontainer items-center">
             <Link
               href="/resturant"
               className={`${poppins.className} navlink ${
@@ -71,7 +71,7 @@ function Navbar() {
             >
               Restaurants
             </Link>
-          </li>
+          </li> */}
           <li className="flexcontainer items-center">
             <Link
               href="/orders"
