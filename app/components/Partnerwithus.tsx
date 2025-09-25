@@ -1,4 +1,5 @@
 import { partner } from '@/lib/home_store'
+import { Route } from 'next'
 import Link from 'next/link'
 
 const Partnerwithus = () => {
@@ -23,7 +24,7 @@ const Partnerwithus = () => {
               {/* h2 */}
               <h2 className="text-size2 text-bg1 font-bold lg:text-size6">{item.h}</h2>
               <Link
-                href={item.href}
+                href={item.href as Route}
                 className="w-[119px] h-[29px] bg-primary rounded-3xl lg:w-[205px] lg:h-[52px] flex justify-center items-center mt-3"
               >
                 <p className="font-medium text-xs text-white lg:text-size3 text-center">

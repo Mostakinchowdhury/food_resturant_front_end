@@ -1,5 +1,6 @@
 import { pr } from '@/lib/home_store';
 import { popular_res } from '@/type/home'
+import { Route } from 'next';
 import Link from 'next/link';
 
 const Popular_r = () => {
@@ -10,7 +11,7 @@ const Popular_r = () => {
       {/* mapping with popular resturant */}
       <div className="overflow-x-auto scroll-smooth flex gap-3 scroll-hide w-full px-3">
         {pr.map((item: popular_res) => (
-          <Link href={item.href} key={item.id} className={`w-${item.ms[0]}px h-${item.ms[1]}px`}>
+          <Link href={item.href as Route} key={item.id} className={`w-${item.ms[0]}px h-${item.ms[1]}px`}>
             <div
               style={{
                 backgroundImage: `url(${item.path})`

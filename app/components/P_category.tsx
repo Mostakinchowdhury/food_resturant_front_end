@@ -1,4 +1,5 @@
 import { popular_category } from '@/lib/home_store'
+import { Route } from 'next'
 import Link from 'next/link'
 
 const P_category = () => {
@@ -13,7 +14,7 @@ const P_category = () => {
         {popular_category.map((item) => (
           <div key={item.id} className="rounded-2xl overflow-hidden">
             {/* food img */}
-            <Link href={item.href}>
+            <Link href={item.href as Route}>
               <div
                 style={{
                   backgroundImage: `url('${item.path}')`

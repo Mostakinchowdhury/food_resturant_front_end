@@ -1,4 +1,5 @@
 import { social } from '@/type/home'
+import { Route } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -33,7 +34,7 @@ const Social = () => {
     <div className="grid grid-cols-4 gap-1.5">
       {socialmedia.map((item: social) => (
         <Link
-          href={item.link}
+          href={item.link as Route}
           key={item.name}
           style={{
             WebkitMaskImage: 'linear-gradient(#000, transparent)',
