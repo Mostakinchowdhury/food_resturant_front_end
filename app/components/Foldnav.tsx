@@ -73,7 +73,7 @@ const Foldnav = ({ cls, action }: menu) => {
                       Special Offers
                     </Link>
                   </li>
-                  <li className="flexcontainer items-center">
+                  {/* <li className="flexcontainer items-center">
                     <Link
                       href="/resturant"
                       className={`${poppins.className} navlink ${
@@ -82,7 +82,7 @@ const Foldnav = ({ cls, action }: menu) => {
                     >
                       Restaurants
                     </Link>
-                  </li>
+                  </li> */}
                   <li className="flexcontainer items-center">
                     <Link
                       href="/orders"
