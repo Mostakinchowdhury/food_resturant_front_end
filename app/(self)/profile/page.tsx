@@ -116,7 +116,7 @@ const ProfilePage = () => {
               </ul>
             </div>
             <div className="mt-6 flex">
-              <Link href={'profile/editprofile'}>
+              <Link href={'/profile/editprofile'}>
                 <Button className="bg-orange-500 px-6 py-4 rounded-lg shadow hover:bg-orange-600 transition cursor-pointer text-size5 text-white text-start">
                   Edit Profile
                 </Button>
@@ -138,7 +138,7 @@ const ProfilePage = () => {
                       {`${itm.city},${itm.street},${itm.country}` || "Now it's empty"}
                       <div className="flex gap-1.5 my-1.5">
                         <Link
-                          href={`profile/editadress?i=${encodeURIComponent(itm.id)}`}
+                          href={`/profile/editadress?i=${encodeURIComponent(itm.id)}`}
                           className="inline-block lg:mx-2"
                         >
                           <Button className="bg-orange-500 px-6 py-4 rounded-lg shadow hover:bg-orange-600 transition cursor-pointer text-size5 text-white">
@@ -191,13 +191,13 @@ const ProfilePage = () => {
                     : "Now it's empty"}
                 </li>
               </ul>
-              <Link href={'profile/editsetting'} className="my-3 block w-full">
+              <Link href={'/profile/editsetting'} className="my-3 block w-full">
                 <Button className="bg-orange-500 px-6 py-4 rounded-lg shadow hover:bg-orange-600 transition cursor-pointer text-size5 text-white">
                   Edit Setting
                 </Button>
               </Link>
               <div className="flex justify-start items-center gap-2">
-                <Link href={'profile/changepawword'} className="my-3 block w-full">
+                <Link href={'/profile/changepawword'} className="my-3 block w-full">
                   <Button
                     className=" px-6 py-4 rounded-lg shadow transition cursor-pointer text-white"
                     variant={'secondary'}
@@ -205,7 +205,7 @@ const ProfilePage = () => {
                     Change Password
                   </Button>
                 </Link>
-                <Link href={'profile/resetpawword'} className="my-3 block w-full">
+                <Link href={'/profile/resetpawword'} className="my-3 block w-full">
                   <Button
                     className=" px-6 py-4 rounded-lg shadow transition cursor-pointer text-white"
                     variant={'secondary'}
