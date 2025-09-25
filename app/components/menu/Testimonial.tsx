@@ -44,8 +44,10 @@ const Testimonial = () => {
           nextEl: nextRef.current
         }}
         onBeforeInit={(swiper) => {
-          swiper.params.navigation.prevEl = prevRef.current
-          swiper.params.navigation.nextEl = nextRef.current
+          if (swiper.params.navigation && typeof swiper.params.navigation !== 'boolean') {
+            swiper.params.navigation!.prevEl = prevRef.current
+            swiper.params.navigation!.nextEl = nextRef.current
+          }
         }}
         onInit={(swiper) => {
           swiper.navigation.init()

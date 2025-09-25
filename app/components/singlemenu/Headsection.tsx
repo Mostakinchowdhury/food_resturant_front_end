@@ -1,4 +1,5 @@
 import { product_type } from '@/type/item'
+import { Route } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaRegStar, FaStar } from 'react-icons/fa'
@@ -62,7 +63,7 @@ const HeadSection = ({ product }: { product: product_type }) => {
                 className="p-2 rounded-sm border-[1px] border-gray-600 text-size0 font-normal cursor-pointer"
                 key={tg.id}
               >
-                <Link href={`/menu/?tag=${encodeURIComponent(tg.name)}`}>{tg.name}</Link>
+                <Link href={`/menu/?tag=${encodeURIComponent(tg.name)}` as Route}>{tg.name}</Link>
               </p>
             ))}
           </div>

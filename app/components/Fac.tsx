@@ -2,8 +2,8 @@ import { faq_nav, faq_steps } from '@/lib/home_store'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const Fac = async ({ searchParams }: { searchParams: { fac?: string } }) => {
-  const facID = parseInt(searchParams?.fac || '1')
+const Fac = async ({ fac }: { fac?: string }) => {
+  const facID = parseInt(fac || '1')
   const question: string = faq_nav.find((i) => i.id === facID)?.title || 'How does Order.UK work?'
   return (
     <section className="lg:bg-bg5 bg-white p-4 lg:space-y-5 space-y-3 box-border">

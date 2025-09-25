@@ -1,13 +1,13 @@
 // app/page.tsx
+import Banner from './components/Banner'
 import Counterblock from './components/Counterblock'
 import Deals from './components/Deals'
 import Fac from './components/Fac'
+import Mobile_banner from './components/Mobile_banner'
 import P_category from './components/P_category'
 import Partnerwithus from './components/Partnerwithus'
 import Popular_r from './components/Popular_r'
 import Taklabanner from './components/Taklabanner'
-import Banner from './components/Banner'
-import Mobile_banner from './components/Mobile_banner'
 
 export default function Page({
   searchParams
@@ -18,7 +18,7 @@ export default function Page({
   const facid = parseInt(searchParams.fac || '1')
 
   return (
-    <div className='space-y-8'>
+    <div className="space-y-8">
       <Mobile_banner />
       <Banner />
       <Deals category={category} />
@@ -26,7 +26,7 @@ export default function Page({
       <Popular_r />
       <Taklabanner />
       <Partnerwithus />
-      <Fac fac={facid} />
+      <Fac fac={facid.toString()} />
       <Counterblock />
     </div>
   )
