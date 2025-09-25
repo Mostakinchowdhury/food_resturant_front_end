@@ -85,9 +85,9 @@ const Foldnav = ({ cls, action }: menu) => {
                   </li>
                   <li className="flexcontainer items-center">
                     <Link
-                      href="/order"
+                      href="/orders"
                       className={`${poppins.className} navlink ${
-                        pathname === '/order' ? 'bg-primary text-bg1' : ''
+                        pathname === '/orders' ? 'bg-primary text-bg1' : ''
                       }`}
                     >
                       Track Order

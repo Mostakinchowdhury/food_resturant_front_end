@@ -18,6 +18,7 @@ export const fetchprofile = createAsyncThunk<profile, void>(
       return response.data[0]
     } catch (error) {
       if (error instanceof Error) {
+        console.log(error)
         return rejectWithValue(error.message)
       }
       return rejectWithValue('Unknown error')

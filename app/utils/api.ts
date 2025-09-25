@@ -30,7 +30,7 @@ api.interceptors.response.use(
         }
 
         // Refresh token দিয়ে নতুন access আনব
-        const res = await axios.post('http://127.0.0.1:8000/api/auth/token/refresh/', {
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}auth/token/refresh/`, {
           refresh: refreshToken
         })
 

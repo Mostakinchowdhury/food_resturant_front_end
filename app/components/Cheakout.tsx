@@ -78,11 +78,29 @@ export function Add_cheakout_Dialog({ granttotal }: { granttotal: number }) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(formdata)
-    console.log('form submit')
+    if (formdata.is_cashon) {
+      try {
+        setLoading(true)
+        const res = await api.post('orders/cash_on_delivery/', formdata)
+        const data = await res.data
+        toast(data.messages, {
+          action: { label: 'Undo', onClick: () => console.log('Undo') }
+        })
+        router.push('/orders')
+      } catch (err) {
+        toast(String(err), {
+          action: { label: 'Undo', onClick: () => console.log('Undo') }
+        })
+      }
+      return
+    }
     try {
       setLoading(true)
-      const res = await api.post('http://127.0.0.1:8000/api/stripe-checkout/2/')
+      const res = await api.post('orders/online_payment/', formdata)
       const data = await res.data
+      toast(data.messages, {
+        action: { label: 'Undo', onClick: () => console.log('Undo') }
+      })
       router.push(data.url)
     } catch (err) {
       toast(String(err), {
@@ -90,10 +108,24 @@ export function Add_cheakout_Dialog({ granttotal }: { granttotal: number }) {
       })
     }
   }
+  // handleSSLCommerz
+  const handleSSLCommerz = async () => {
+    setLoading(true)
+    const res = await api.post('http://127.0.0.1:8000/api/sslcommerz-checkout/2/')
+    const data = await res.data
+    router.push(data.url)
+  }
   useEffect(() => {
     console.log(citys)
     console.log(myphone)
   })
+  useEffect(() => {
+    setformdata((data) => ({
+      ...data,
+      amount: granttotal
+    }))
+  }, [granttotal])
+
   return (
     <Dialog>
       <DialogTrigger asChild className="flex justify-center items-center w-full">
@@ -110,7 +142,7 @@ export function Add_cheakout_Dialog({ granttotal }: { granttotal: number }) {
             }
           }}
         >
-          CHECKOUT NOW
+          CHECKOUT NOW{' '}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -237,6 +269,9 @@ export function Add_cheakout_Dialog({ granttotal }: { granttotal: number }) {
             </DialogClose>
             <Button type="submit" className="cursor-pointer">
               {Loading ? 'Loading...' : formdata.is_cashon ? 'Cash on delivery' : 'Pay now'}
+            </Button>
+            <Button onClick={handleSSLCommerz} className="cursor-pointer" type="button">
+              {Loading ? 'Proccesing' : 'Pay locally'}
             </Button>
           </DialogFooter>
         </form>

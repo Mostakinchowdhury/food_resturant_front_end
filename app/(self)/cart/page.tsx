@@ -12,8 +12,8 @@ import { toast } from 'sonner'
 
 const CartPage = () => {
   const totalPrice = useSelector((state: RootState) =>
-    parseFloat((state.cart.cart?.total_price)?.toFixed(2) || "0"
-  ))
+    parseFloat(state.cart.cart?.total_price?.toFixed(2) || '0')
+  )
   const [code, setcode] = useState<string>('')
   const [discount, setdiscount] = useState<number>(0)
   const granttotal =
@@ -32,7 +32,6 @@ const CartPage = () => {
   }
   // loading state
   const [loading, setloading] = useState<boolean>(false)
-
   // handle change
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -130,6 +129,7 @@ const CartPage = () => {
           </div>
           <div className="flex justify-between items-center w-full">
             <p className="text-size3 font-medium text-gray-400">Discount</p>
+            {/* debug */}
             <p className="text-size4 font-semibold text-txt2">
               £
               {parseFloat(
@@ -147,7 +147,7 @@ const CartPage = () => {
             <p className="text-size4 font-semibold text-txt2">£{granttotal}</p>
           </div>
           {/* cheakout button */}
-          <Add_cheakout_Dialog granttotal={granttotal}/>
+          <Add_cheakout_Dialog granttotal={granttotal} />
         </div>
       </div>
     </div>
