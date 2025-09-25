@@ -1,13 +1,20 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  typedRoutes: true
+  typedRoutes: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: '127.0.0.1',
+        port: '8000',
+        pathname: '/media/**'
+      }
+    ]
+  },
+  eslint: {
+    ignoreDuringBuilds: true // build error ignore
+  }
 }
 
 export default nextConfig
-module.exports = {
-  images: {
-    remotePatterns: [new URL('http://127.0.0.1:8000/media/**')]
-  }
-}

@@ -4,7 +4,7 @@ import Reviews from '@/components/singlemenu/Reviews'
 import { product_type } from '@/type/item'
 import { Metadata } from 'next'
 
-export const revalidate = 3600 / 4
+export const revalidate = 900
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   try {
