@@ -39,7 +39,7 @@ const CartPage = () => {
     setloading(true)
     console.log(code)
     try {
-      const response = await api.post<object>(
+      const response = await api.post<{ discount_percent?: number; code: string }>(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}promocodes/apply/`,
         { code },
         {
@@ -48,18 +48,19 @@ const CartPage = () => {
       )
       if (!(response.status == 200 || response.status == 201)) {
         setloading(false)
-        console.log(response.data)
+        console.log('come from mywant', response.data)
         toast(Object.values(response.data).flat()[0], {
           action: {
             label: 'Undo',
             onClick: () => {
-              console.log('remove notice')
+              console.log(response.data)
             }
           }
         })
         return
       }
       setloading(false)
+      console.log('come from mywant', response.data)
       setdiscount(response.data?.discount_percent || 0)
       toast(Object.values(response.data).flat()[0], {
         action: {
