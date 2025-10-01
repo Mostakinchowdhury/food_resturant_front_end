@@ -15,10 +15,10 @@ export default function Layout({ children }: LayoutProps) {
   const authloading = useSelector((state: RootState) => state.auth.isloading)
   useEffect(() => {
     // wait 1 cycle so redux can update tokens
-    if (!authenticated) {
+    if (!authenticated && !authloading) {
       router.push('/sign')
     }
-  }, [authenticated, router])
+  }, [authenticated, router, authloading])
   if (authloading) {
     return (
       <div className="w-[1vw] h-[1vh] fixed flex justify-between items-center text-primary">

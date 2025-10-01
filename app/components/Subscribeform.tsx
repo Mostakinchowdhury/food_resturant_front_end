@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { toast } from 'sonner'
 import LoadingLoader from './Loader'
 
-const Subscribeform = () => {
+const Subscribeform = ({ className }: { className?: string }) => {
   // loading state
   const [loading, setloading] = useState<boolean>(false)
   // Error state
@@ -95,13 +95,13 @@ const Subscribeform = () => {
     return <LoadingLoader />
   }
   return (
-    <div className="space-y-0.5">
+    <div className={`'${className} space-y-0.5 mx-0'`}>
       <form method="POST" className="mt-4 space-y-2.5" onSubmit={handleSubmit}>
-        <div className="lg:w-[450px] box-border bg-bg5 rounded-3xl lg:h-[56px] flexcontainer relative z-10 flex-row justify-between h-[59px] w-[374px]">
+        <div className="lg:w-[450px] box-border bg-bg5 lg:h-[56px] flex relative z-10 flex-row justify-between h-[59px] md:w-[374px] sm:w-[280px] w-[210px] gap-0 rounded-2xl rounded-br-none rounded-tr-none md:rounded-3xl">
           <input
             name="email"
             type="email"
-            className="placeholder:text-size1 placeholder:font-normal placeholder:text-txt text-txt text-size1 font-medium ml-6 outline-0 border-0 focus:outline-0 focus:border-0"
+            className="placeholder:text-size1 placeholder:font-normal placeholder:text-txt text-txt text-size1 font-medium md:ml-6 ml-0 outline-0 border-0 focus:outline-0 focus:border-0 rounded-2xl rounded-tr-none rounded-br-none px-3"
             placeholder="youremail@gmail.com"
             value={email}
             required
@@ -109,13 +109,13 @@ const Subscribeform = () => {
           />
           <button
             type="submit"
-            className="font-medium text-size3 text-white bg-primary h-[56px] lg:px-[60px] px-[25px] rounded-3xl cursor-pointer relative z-50"
+            className="font-medium md:text-size3 text-white bg-primary h-[59px] lg:px-[60px] md:px-[25px] px-2 md:rounded-3xl cursor-pointer relative z-50 rounded-tr-2xl rounded-br-2xl text-size1"
           >
             Subscribe
           </button>
         </div>
       </form>
-      <p className="font-normal text-size0 text-txt2 lg:ml-6 lg:text-start text-center">
+      <p className="font-normal text-size0 text-txt2 lg:text-start text-center">
         we wont spam, read our{' '}
         <Link href={'/email_policy'} className="underline">
           email policy

@@ -11,7 +11,7 @@ const initialState: AuthState = {
   accessToken: null,
   refreshToken: null,
   isAuthenticated: false,
-  isloading: false
+  isloading: true
 }
 
 const authSlice = createSlice({
@@ -22,7 +22,6 @@ const authSlice = createSlice({
       const { accessToken, refreshToken } = action.payload
       state.accessToken = accessToken
       state.refreshToken = refreshToken
-      state.isAuthenticated = true
 
       localStorage.setItem('accessToken', accessToken)
       localStorage.setItem('refreshToken', refreshToken)
@@ -47,10 +46,19 @@ const authSlice = createSlice({
     },
     toogleauthloading: (state, action: PayloadAction<boolean>) => {
       state.isloading = action.payload
+    },
+    toogleauthenticate: (state, action: PayloadAction<boolean>) => {
+      state.isAuthenticated = action.payload
     }
   }
 })
 
-export const { loginSuccess, logout, loadTokensFromStorage, toogleauthloading } = authSlice.actions
+export const {
+  loginSuccess,
+  logout,
+  loadTokensFromStorage,
+  toogleauthloading,
+  toogleauthenticate
+} = authSlice.actions
 const slice = { reducer: authSlice.reducer, name: authSlice.name }
 export default slice.reducer

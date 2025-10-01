@@ -7,6 +7,8 @@ import { poppins } from '../Navbar'
 import Detailaddtocart from './Detailaddtocart'
 
 const HeadSection = ({ product }: { product: product_type }) => {
+  console.log('from singe')
+  console.log(product)
   return (
     <div
       className={`flex flex-col md:flex-row items-stretch md:gap-10 gap-4 p-4 bg-white shadow-md rounded-lg ${poppins.className}`}

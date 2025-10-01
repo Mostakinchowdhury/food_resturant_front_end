@@ -3,6 +3,7 @@ import { poppins } from '@/components/Navbar'
 import { Button } from '@/components/ui/button'
 import { loginSuccess } from '@/lib/authcreateslice'
 import { RootState } from '@/lib/configstore'
+import { isvalidtoken } from '@/lib/validatels'
 import { auth_type } from '@/type/auth'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -89,6 +90,13 @@ const SignPage = () => {
             refreshToken: data.refresh
           })
         )
+
+        if (isLogin) {
+          const isvaild = await isvalidtoken()
+          if (isvaild) {
+            router.push('/profile')
+          }
+        }
         console.log(data)
         setIsLoading(false)
         // navigate to verify email page
@@ -115,7 +123,7 @@ const SignPage = () => {
     if (isAuthenticated) {
       router.push('/profile')
     }
-  }, [])
+  }, [isAuthenticated, router])
   return (
     <section
       className={`flex flex-col md:flex-row items-stretch md:gap-10 gap-4 p-4 bg-txt2 shadow-md rounded-lg ${poppins.className}`}

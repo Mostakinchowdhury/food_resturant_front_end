@@ -30,10 +30,10 @@ const Footer = () => {
           </div>
         </div>
         {/* box2 */}
-        <div className="flexbox-3 lg:items-start space-y-3 items-center mx-auto">
+        <div className="flexbox-3 items-start space-y-3">
           <p className="text-size3 font-bold text-txt2">Get Exclusive Deals in your Inbox</p>
           {/* form */}
-          <Subscribeform />
+          <Subscribeform className="" />
           {/* social icon */}
           <Social />
         </div>

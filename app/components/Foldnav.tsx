@@ -21,6 +21,9 @@ const Foldnav = ({ cls, action }: menu) => {
   const handleactive = () => {
     action((pre: boolean) => !pre)
   }
+  const alladdress = useSelector((state: RootState) => state.profile.profile?.addresses)
+  const add2 = alladdress?.at(0)
+  const adress = add2 ? `${add2?.city},${add2?.street},${add2?.country}` : 'Not set'
   const total_price = useSelector((state: RootState) => state.cart.cart?.total_price)
   const total_quantity = useSelector((state: RootState) => state.cart.cart?.total_quantity)
   const user = useSelector((state: RootState) => state.user.user)
@@ -159,7 +162,7 @@ const Foldnav = ({ cls, action }: menu) => {
       </div>
       <div className="flex gap-2 items-center justify-end lg:hidden">
         <FaLocationDot size={25} />
-        <p className="font-normal text-size1 text-txt">Lution Street, N4G-00....</p>
+        <p className="font-normal text-size1 text-txt">{adress}</p>
       </div>
     </>
   )

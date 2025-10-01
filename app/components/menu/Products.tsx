@@ -6,6 +6,7 @@ import Addtocart from '../Addtocart'
 // items
 
 const Products = ({ category, products }: { category?: string; products: product_type[] }) => {
+  // console.log(products);
   return (
     <section className="md:space-y-3.5 space-y-3 box-border">
       {category && <h3 className="font-bold text-black text-size5 lg:text-size6">{category}</h3>}
@@ -47,7 +48,7 @@ const Products = ({ category, products }: { category?: string; products: product
                     className="h-full w-[205px]
         overflow-hidden rounded-xl bg-center bg-cover bg-no-repeat box-border justify-end flex items-end shrink-0"
                     style={{
-                      backgroundImage: `url(${items.image})`,
+                      backgroundImage: items.image ? `url(${encodeURI(items.image)})` : 'none',
                       width: '205px'
                     }}
                   >

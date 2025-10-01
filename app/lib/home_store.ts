@@ -1,4 +1,11 @@
-import { deals_type, fac_step_type, faq, partNer, popular_category_type, popular_res } from '@/type/home'
+import {
+  deals_type,
+  fac_step_type,
+  faq,
+  partNer,
+  popular_category_type,
+  popular_res
+} from '@/type/home'
 
 export const partner: partNer[] = [
   {
@@ -7,7 +14,7 @@ export const partner: partNer[] = [
     p: 'Signup as a business',
     h: 'Partner with us',
     path: '/partner1.png',
-    href: '#'
+    href: '/applypartner'
   },
   {
     id: 2,
@@ -15,7 +22,7 @@ export const partner: partNer[] = [
     p: 'Signup as a rider',
     h: 'Ride with us',
     path: '/partner2.png',
-    href: '#'
+    href: '/applyrider'
   }
 ]
 
@@ -65,7 +72,6 @@ export const pr: popular_res[] = [
   }
 ]
 
-
 // popular_category
 
 export const popular_category: popular_category_type[] = [
@@ -113,7 +119,6 @@ export const popular_category: popular_category_type[] = [
   }
 ]
 
-
 // deals_type store
 
 export const deals: deals_type[] = [
@@ -148,9 +153,7 @@ export const deals: deals_type[] = [
 
 // deals nav
 
-export const deals_nav:string[] = ['Vegan','Sushi', 'Pizza & Fast food','others']
-
-
+export const deals_nav: string[] = ['Vegan', 'Sushi', 'Pizza & Fast food', 'others']
 
 // FAQ
 
@@ -164,22 +167,22 @@ export const faq_nav: faq[] = [
   {
     id: 2,
     title: 'What payment methods are accepted?',
-    description:''
+    description: ''
   },
   {
     id: 3,
     title: 'Can I track my order in real-time?',
-    description:''
+    description: ''
   },
   {
     id: 4,
     title: 'Are there any special discounts or promotions available?',
-    description:''
+    description: ''
   },
   {
     id: 5,
     title: 'Is Order.UK available in my area?',
-    description:''
+    description: ''
   }
 ]
 
@@ -208,4 +211,3 @@ export const faq_steps: fac_step_type[] = [
     fac: 'How does Order.UK work?'
   }
 ]
-

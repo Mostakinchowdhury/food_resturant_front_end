@@ -12,7 +12,7 @@ type Props = {
 
 export default function LoadingLoader({
   text = 'LOADING...',
-  sizeClass = 'text-6xl lg:text-9xl',
+  sizeClass = 'md:text-6xl lg:text-9xl text-4xl',
   // default gradient (orange -> yellow). If you want an image behind text, pass:
   // "url('/your.jpg'), linear-gradient(90deg,#ff8a00,#ffd200)"
   gradient = 'linear-gradient(90deg,#ff8a00 0%,#ffd200 60%)',

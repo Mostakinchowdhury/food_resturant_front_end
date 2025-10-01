@@ -1,4 +1,4 @@
-import { loginSuccess, logout, toogleauthloading } from './authcreateslice'
+import { loginSuccess, logout, toogleauthenticate, toogleauthloading } from './authcreateslice'
 import store from './configstore'
 
 export async function isvalidtoken() {
@@ -6,11 +6,11 @@ export async function isvalidtoken() {
   if (!(accessToken && refreshToken)) {
     console.log('logout from accessToken && refreshToken')
     store.dispatch(logout())
+    store.dispatch(toogleauthloading(false))
     return
   }
   try {
     // Verify access token
-    store.dispatch(toogleauthloading(true))
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}auth/token/verify/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -18,10 +18,10 @@ export async function isvalidtoken() {
     })
 
     if (response.ok) {
+      store.dispatch(toogleauthenticate(true))
       store.dispatch(toogleauthloading(false))
-      return
-    }  // access token valid
-
+      return true
+    } // access token valid
 
     // Access token invalid → try refresh token
     const refreshResponse = await fetch(
@@ -36,15 +36,18 @@ export async function isvalidtoken() {
       console.log('logout from !refreshResponse.ok')
       store.dispatch(logout())
       store.dispatch(toogleauthloading(false))
-      return
+      return false
     }
 
     const resdata = await refreshResponse.json()
     store.dispatch(loginSuccess({ accessToken: resdata.access, refreshToken }))
+    store.dispatch(toogleauthenticate(true))
     store.dispatch(toogleauthloading(false))
+    return true
   } catch {
     console.log('logout from catch')
     store.dispatch(logout())
     store.dispatch(toogleauthloading(false))
+    return false
   }
 }
