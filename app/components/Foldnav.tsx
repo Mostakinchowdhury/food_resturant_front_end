@@ -17,10 +17,7 @@ import { FaLocationDot } from 'react-icons/fa6'
 import { useDispatch, useSelector } from 'react-redux'
 import { poppins } from './Navbar'
 
-const Foldnav = ({ cls, action }: menu) => {
-  const handleactive = () => {
-    action((pre: boolean) => !pre)
-  }
+const Foldnav = ({ cls}: menu) => {
   const alladdress = useSelector((state: RootState) => state.profile.profile?.addresses)
   const add2 = alladdress?.at(0)
   const adress = add2 ? `${add2?.city},${add2?.street},${add2?.country}` : 'Not set'
@@ -120,7 +117,6 @@ const Foldnav = ({ cls, action }: menu) => {
 
           <SheetTrigger className="cursor-pointer">
             <div
-              onClick={handleactive}
               className="p-4 cursor-pointer focus:outline-0 outline-0 active:outline-0"
             >
               <Image src={'/Menu.png'} alt="menu" width={65} height={65} />

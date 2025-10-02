@@ -5,7 +5,6 @@ import { Poppins } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
 import { FaUserCircle } from 'react-icons/fa'
 import { IoExit } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,11 +22,13 @@ function Navbar() {
   const pathname = usePathname()
   const { isAuthenticated } = useSelector((state: RootState) => state.auth)
   const dispatch = useDispatch()
-  const [active, setisactive] = useState<boolean>(false)
   return (
     <>
-      <header className="lg:flexcontainer hidden lg:flex">
-        <Image src="/logo.png" alt="app logo" width={215} height={53} />
+      <header className="lg:flexcontainer hidden lg:flex justify-between">
+        <Link href="/" className={`${poppins.className} navlink text-bg1`}>
+          <Image src="/logo.png" alt="app logo" width={215} height={53} />
+        </Link>
+
         <div className="w-22 h-2 bg-transparent"></div>
         <nav className="flexcontainer list-none">
           <li className="flexcontainer items-center">
@@ -102,7 +103,7 @@ function Navbar() {
           </Button>
         </Link>
       </header>
-      <Foldnav cls="divide-x-[2px]  divide-black lg:hidden" action={setisactive} />
+      <Foldnav cls="divide-x-[2px]  divide-black lg:hidden" />
     </>
   )
 }

@@ -19,7 +19,6 @@ function InnerProvider({ children }: { children: React.ReactNode }) {
   const profileloading = useSelector((state: RootState) => state.profile.isloading)
   const settingloading = useSelector((state: RootState) => state.setting.isloading)
   const userloading = useSelector((state: RootState) => state.user.isloading)
-
   useEffect(() => {
     const authandvalidate = () => {
       store.dispatch(loadTokensFromStorage())
@@ -29,7 +28,7 @@ function InnerProvider({ children }: { children: React.ReactNode }) {
     dispatch(fetchsetting())
     dispatch(fetchuser())
     authandvalidate()
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (isAuthenticated) {

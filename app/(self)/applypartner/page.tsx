@@ -134,7 +134,7 @@ const Applyrider = () => {
   }
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center rounded-xl p-3 md:p-5 lg:px-18">
-      <div className="bg-white shadow-md rounded-lg p-6 w-full md:max-w-md">
+      <div className="bg-white shadow-md rounded-lg p-6 w-full md:max-w-[740px]">
         <h2 className="text-center text-primary font-extrabold lg:text-size6 text-size5 tracking-wide my-4">
           Become a Business Partner Today
         </h2>
@@ -142,7 +142,7 @@ const Applyrider = () => {
         <div className="space-y-3 flex items-start gap-4">
           {/* Image preview */}
 
-          <div className="flex justify-between w-full lg:px-8 lg:flex-row flex-col ">
+          <div className="flex justify-between w-full lg:px-8  flex-col lg:flex-row">
             <div className="">
               <label className="text-accent font-bold text-size3 my-4 block">
                 Upload your photo
