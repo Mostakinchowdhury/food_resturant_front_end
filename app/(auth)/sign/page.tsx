@@ -96,6 +96,8 @@ const SignPage = () => {
           if (isvaild) {
             router.push('/profile')
           }
+        } else {
+          router.push(`/verifyemail?email=${encodeURIComponent(formdata.email)}`) // navigate to verify email page
         }
         console.log(data)
         setIsLoading(false)

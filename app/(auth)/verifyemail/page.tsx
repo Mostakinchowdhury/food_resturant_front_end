@@ -4,6 +4,7 @@ import { field_type } from '@/type/auth'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 const SignPage = ({ searchParams }: { searchParams?: { email?: string } }) => {
   const router = useRouter()
@@ -18,9 +19,7 @@ const SignPage = ({ searchParams }: { searchParams?: { email?: string } }) => {
     field6: ''
   })
   const inputs = useRef<HTMLInputElement[]>([])
-  const [error, setError] = useState<any>('')
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [success, setSuccess] = useState<any>('')
+  const [isLoading, setIsLoading] = useState<boolean[]>([false, false])
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9]/g, '')
     setFormdata({ ...formdata, [e.target.name]: value })
@@ -47,13 +46,18 @@ const SignPage = ({ searchParams }: { searchParams?: { email?: string } }) => {
       field6: ''
     })
     if (!email) {
-      setError('email not found')
-      setIsLoading(false)
+      toast('email not found', {
+        action: {
+          label: 'Need help!',
+          onClick: () => {
+            router.push(`/get_help`)
+          }
+        }
+      })
+      setIsLoading((pre) => [pre[0], false])
       return
     }
-    setError('')
-    setSuccess('')
-    setIsLoading(true)
+    setIsLoading((pre) => [pre[0], true])
     const url = `${
       process.env.NEXT_PUBLIC_BACKEND_URL
     }auth/verify_user_otp/?email=${encodeURIComponent(email)}`
@@ -66,20 +70,45 @@ const SignPage = ({ searchParams }: { searchParams?: { email?: string } }) => {
       } catch {
         data = { error: 'Invalid JSON response', raw: text }
       }
-      setSuccess(data)
-      setIsLoading(false)
+      if (!response.ok) {
+        toast(data.error ? data.error : 'Something went wrong', {
+          action: {
+            label: 'Need help!',
+            onClick: () => {
+              router.push(`/get_help`)
+            }
+          }
+        })
+        return
+      }
+      toast(`We sent a new OTP to your Email: ${email ? email : ''}`, {
+        action: {
+          label: 'Undo',
+          onClick: () => {
+            console.log('remove notice')
+          }
+        }
+      })
+      setIsLoading((pre) => [pre[0], false])
       inputs.current[0].focus()
     } catch (error) {
-      setError(error)
-      setIsLoading(false)
+      console.log('catch for Resent otp')
+      console.log(error)
+      toast('Sorry something went wrong please contact with us', {
+        action: {
+          label: 'Need help!',
+          onClick: () => {
+            router.push(`/get_help`)
+          }
+        }
+      })
+      setIsLoading((pre) => [pre[0], false])
     }
   }
   // handle submit function
   const handlesubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError('')
-    setSuccess('')
-    setIsLoading(true)
+    setIsLoading((pre) => [true, pre[1]])
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}auth/verify_user_otp/`
     try {
       const response = await fetch(url, {
@@ -99,12 +128,28 @@ const SignPage = ({ searchParams }: { searchParams?: { email?: string } }) => {
       }
 
       if (!response.ok) {
-        setError(data)
-        setIsLoading(false)
+        toast(data.error ? data.error : 'Something went wrong', {
+          action: {
+            label: 'Need help!',
+            onClick: () => {
+              router.push(`/get_help`)
+            }
+          }
+        })
+        setIsLoading((pre) => [false, pre[1]])
       } else {
-        setSuccess(data)
-        console.log(data)
-        setIsLoading(false)
+        toast(data ? String(Object.values(data).flat()[0]) : 'Succesfully verified your email', {
+          action: {
+            label: 'go profile!',
+            onClick: () => {
+              router.push(`/profile`)
+            }
+          }
+        })
+        setTimeout(() => {
+          router.push('/profile')
+        }, 1000)
+        setIsLoading((pre) => [false, pre[1]])
         setFormdata({
           field1: '',
           field2: '',
@@ -115,8 +160,15 @@ const SignPage = ({ searchParams }: { searchParams?: { email?: string } }) => {
         })
       }
     } catch (error) {
-      setError(error)
-      setIsLoading(false)
+      toast(error ? (error as string) : 'Something went wrong', {
+        action: {
+          label: 'Need help!',
+          onClick: () => {
+            router.push(`/get_help`)
+          }
+        }
+      })
+      setIsLoading((pre) => [false, pre[1]])
     }
   }
 
@@ -141,7 +193,6 @@ const SignPage = ({ searchParams }: { searchParams?: { email?: string } }) => {
     }
   }, [formdata])
 
-  console.log(JSON.stringify(formdata))
   return (
     <section
       className={`flex flex-col md:flex-row items-stretch md:gap-10 gap-4 p-4 bg-txt2 shadow-md rounded-lg ${poppins.className}`}
@@ -269,36 +320,16 @@ const SignPage = ({ searchParams }: { searchParams?: { email?: string } }) => {
               type="submit"
               className="w-full px-4 py-3 bg-primary text-white rounded-md hover:bg-orange-600 transition cursor-pointer text-size3 font-bold md:text-size4"
             >
-              {isLoading ? 'Loading...' : 'Verify Email'}
+              {isLoading[0] ? 'Loading...' : 'Verify Email'}
             </button>
             <button
               type="button"
               className="w-full px-4 py-3 bg-primary text-white rounded-md hover:bg-orange-600 transition cursor-pointer text-size3 font-bold md:text-size4"
               onClick={handleResend}
             >
-              {isLoading ? 'Loading...' : 'Resend OTP'}
+              {isLoading[1] ? 'Loading...' : 'Resend OTP'}
             </button>
           </div>
-          {/* error message */}
-          {error && (
-            <p className="text-red-500 text-size1 font-normal">
-              {typeof error == 'string'
-                ? error
-                : error.error
-                ? error.error
-                : Object.values(error)[0]}
-            </p>
-          )}
-          {/* success message */}
-          {success && (
-            <p className="text-green-500 text-size1 font-normal">
-              {success && (
-                <p className="text-green-500 text-size1 font-normal">
-                  {typeof success === 'string' ? success : String(Object.values(success)[0])}
-                </p>
-              )}
-            </p>
-          )}
         </form>
       </div>
     </section>

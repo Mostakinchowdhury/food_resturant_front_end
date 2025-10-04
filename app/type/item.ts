@@ -27,7 +27,7 @@ export type product_type = {
   price: string
   max_price: string | null
   stock: number
-  image: string
+  productimgs: productimgs_type[]
   tags: tags[]
   created_at: string
   update_at: string
@@ -36,4 +36,27 @@ export type product_type = {
   review_count: number
   addedtocard: number
   added_to_cart_count: number
+}
+
+export type productimgs_type = {
+  id: number
+  image: string
+  product: number
+}
+
+
+
+export interface Category {
+  id: number
+  products: product_type[]
+  name: string
+  description: string
+  image: string
+  supercategory: number
+}
+
+export interface SuperCategory {
+  id: number;
+  category: Category[];
+  title: string;
 }

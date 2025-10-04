@@ -28,16 +28,26 @@ export default async function ResturantPage({
     url += `&tag=${tag}`
   }
   const respons = await fetch(url)
-  const { results }: { results: product_type[] } = await respons.json()
+  let data: product_type[] = []
+  const results: string = await respons.text()
+  try {
+    data = JSON.parse(results)
+  } catch {
+    data = []
+  }
   if (!respons.ok) {
-    throw new Error('Failed to fetch data')
+    return (
+      <p className="text-red-700 text-center">
+        Something went wrong in server please contact with us
+      </p>
+    )
   }
   try {
     return (
-      <div className={`${poppins.className} space-y-7`}>
+      <div className={`${poppins.className || ''} space-y-7`}>
         <Search />
-        <Typenav category={category} />
-        <Products category={category} products={results} />
+        <Typenav />
+        <Products category={category} products={data} />
       </div>
     )
   } catch (error) {

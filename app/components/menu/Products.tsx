@@ -48,7 +48,9 @@ const Products = ({ category, products }: { category?: string; products: product
                     className="h-full w-[205px]
         overflow-hidden rounded-xl bg-center bg-cover bg-no-repeat box-border justify-end flex items-end shrink-0"
                     style={{
-                      backgroundImage: items.image ? `url(${encodeURI(items.image)})` : 'none',
+                      backgroundImage: items.productimgs[0].image
+                        ? `url(${encodeURI(items?.productimgs[0]?.image)})`
+                        : `url("/demo.jpg")`,
                       width: '205px'
                     }}
                   >
