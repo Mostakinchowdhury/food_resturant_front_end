@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '**res.cloudinary.com', // matches e.g. res.cloudinary.com, a-res.cloudinary.com
+        hostname: '**.res.cloudinary.com', // matches e.g. res.cloudinary.com, a-res.cloudinary.com
         port: '',
         pathname: '/**' // allow any path under Cloudinary
       }
