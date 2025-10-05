@@ -9,7 +9,8 @@ import Detailaddtocart from './Detailaddtocart'
 const HeadSection = ({ product }: { product: product_type }) => {
   console.log('from singe')
   console.log(product)
-  const isvideo:boolean = product.productimgs[0].file?.endsWith('.mp4') || product.productimgs[0].file?.endsWith('.mov');
+  const isvideo: boolean =
+    product.productimgs[0].file?.endsWith('.mp4') || product.productimgs[0].file?.endsWith('.mov')
   return (
     <div
       className={`flex flex-col md:flex-row items-stretch md:gap-10 gap-4 p-4 bg-white shadow-md rounded-lg ${poppins.className}`}
@@ -24,7 +25,6 @@ const HeadSection = ({ product }: { product: product_type }) => {
               controls
               autoPlay
               loop
-              muted
             />
           ) : (
             <Image
