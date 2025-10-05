@@ -5,7 +5,13 @@ import { ReactNode } from 'react'
 import Addtocart from '../Addtocart'
 // items
 
-const Products = ({ category, products }: { category?: string; products: product_type[] }) => {
+const Products = async ({
+  category,
+  products
+}: {
+  category?: string
+  products: product_type[]
+}) => {
   // console.log(products);
   return (
     <section className="md:space-y-3.5 space-y-3 box-border">
@@ -34,7 +40,7 @@ const Products = ({ category, products }: { category?: string; products: product
                   <h3 className="font-bold text-size3 text-txt2">
                     {process.env.NEXT_PUBLIC_CURRENCY_SYMBLE}
                     {items.price} {process.env.NEXT_PUBLIC_CURRENCY_NAME} <br />
-                    {items.max_price && (
+                    {items.max_price && items.max_price > items.price && (
                       <del className="font-bold text-size3 text-red-400">
                         {process.env.NEXT_PUBLIC_CURRENCY_SYMBLE}
                         {items.max_price} {process.env.NEXT_PUBLIC_CURRENCY_NAME}
@@ -44,19 +50,43 @@ const Products = ({ category, products }: { category?: string; products: product
                 </div>
                 {/* image */}
                 <Link href={`/menu/${items.id}`} className="cursor-pointer h-full">
-                  <div
-                    className="h-full w-[205px]
-        overflow-hidden rounded-xl bg-center bg-cover bg-no-repeat box-border justify-end flex items-end shrink-0"
-                    style={{
-                      backgroundImage: items.productimgs[0].image
-                        ? `url(${encodeURI(items?.productimgs[0]?.image)})`
-                        : `url("/demo.jpg")`,
-                      width: '205px'
-                    }}
-                  >
-                    {/* plus place */}
-                    <Addtocart id={items.id} />
-                  </div>
+                  {items.productimgs[0] ? (
+                    items.productimgs[0].file.endsWith('.mp4') ||
+                    items.productimgs[0].file.endsWith('.mov') ? (
+                      <video
+                        src={items.productimgs[0].file}
+                        className="h-full w-[205px] overflow-hidden rounded-xl object-cover"
+                        controls
+                        autoPlay
+                        loop
+                        muted
+                      />
+                    ) : (
+                      <div
+                        className="h-full w-[205px]
+               overflow-hidden rounded-xl bg-center bg-cover bg-no-repeat box-border justify-end flex items-end shrink-0 relative"
+                        style={{
+                          backgroundImage: `url(${encodeURI(items.productimgs[0].file)})`,
+                          width: '205px'
+                        }}
+                      >
+                        {/* plus place */}
+                        <Addtocart id={items.id} />
+                      </div>
+                    )
+                  ) : (
+                    <div
+                      className="h-full w-[205px]
+               overflow-hidden rounded-xl bg-center bg-cover bg-no-repeat box-border justify-end flex items-end shrink-0 relative"
+                      style={{
+                        backgroundImage: `url('/demo.jpg')`,
+                        width: '205px'
+                      }}
+                    >
+                      {/* plus place */}
+                      <Addtocart id={items.id} />
+                    </div>
+                  )}
                 </Link>
               </div>
             )

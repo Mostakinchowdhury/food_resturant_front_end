@@ -12,31 +12,36 @@ import { fetchuser } from './userslice'
 import { isvalidtoken } from './validatels'
 
 function InnerProvider({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth)
   const dispatch = useDispatch<AppDispatch>()
-  const authloading = useSelector((state: RootState) => state.auth.isloading)
-  const cartloading = useSelector((state: RootState) => state.cart.isloading)
-  const profileloading = useSelector((state: RootState) => state.profile.isloading)
-  const settingloading = useSelector((state: RootState) => state.setting.isloading)
-  const userloading = useSelector((state: RootState) => state.user.isloading)
+  const {
+    isAuthenticated,
+    isloading: authloading,
+    accessToken,
+    refreshToken
+  } = useSelector((state: RootState) => state.auth)
+
+  const { isloading: cartloading } = useSelector((state: RootState) => state.cart)
+  const { isloading: profileloading } = useSelector((state: RootState) => state.profile)
+  const { isloading: settingloading } = useSelector((state: RootState) => state.setting)
+  const { isloading: userloading } = useSelector((state: RootState) => state.user)
+
   useEffect(() => {
-    const authandvalidate = () => {
-      store.dispatch(loadTokensFromStorage())
-      isvalidtoken()
-    }
+    dispatch(loadTokensFromStorage())
+    isvalidtoken()
     dispatch(fetchprofile())
     dispatch(fetchsetting())
     dispatch(fetchuser())
-    authandvalidate()
-  }, [dispatch])
+  }, [dispatch, accessToken, refreshToken])
 
   useEffect(() => {
     if (isAuthenticated) {
-      store.dispatch(fetchCart())
+      dispatch(fetchCart())
     }
-  }, [isAuthenticated])
+  }, [dispatch, isAuthenticated])
 
-  if (authloading || cartloading || profileloading || settingloading || userloading) {
+  const isLoading = authloading || cartloading || profileloading || settingloading || userloading
+
+  if (isLoading) {
     return (
       <div
         className={`h-screen w-full flex justify-center items-center gap-3 text-primary font-bold lg:font-extrabold tracking-wider text-6xl lg:text-9xl ${poppins.className}`}
@@ -45,6 +50,7 @@ function InnerProvider({ children }: { children: React.ReactNode }) {
       </div>
     )
   }
+
   return <>{children}</>
 }
 

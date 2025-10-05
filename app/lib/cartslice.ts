@@ -162,6 +162,12 @@ const cartSlice = createSlice({
         state.cart.total_price += parseFloat(itemprice.toFixed(2))
         state.cart.total_quantity += 1
       }
+    },
+    // clear cart on logout
+    clearCart: (state) => {
+      state.cart = null
+      state.isloading = false
+      state.error = ''
     }
   },
   extraReducers: (builder) => {
@@ -202,5 +208,5 @@ const cartSlice = createSlice({
   }
 })
 
-export const { updateQuantityLocally, removeLocally, toggleischeakedlocally } = cartSlice.actions
+export const { updateQuantityLocally, removeLocally, toggleischeakedlocally,clearCart } = cartSlice.actions
 export default cartSlice.reducer

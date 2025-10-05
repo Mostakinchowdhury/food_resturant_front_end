@@ -9,20 +9,32 @@ import Detailaddtocart from './Detailaddtocart'
 const HeadSection = ({ product }: { product: product_type }) => {
   console.log('from singe')
   console.log(product)
+  const isvideo:boolean = product.productimgs[0]?.file?.endsWith('.mp4') || product.productimgs[0]?.file?.endsWith('.mov');
   return (
     <div
       className={`flex flex-col md:flex-row items-stretch md:gap-10 gap-4 p-4 bg-white shadow-md rounded-lg ${poppins.className}`}
     >
       <div className="w-full md:w-1/2 flex-1 flex">
         {/* product image */}
+        {isvideo ? (
+          <video
+            src={product.productimgs[0]?.file}
+            className="md:w-auto w-full object-cover rounded-2xl"
+            controls
+            autoPlay
+            loop
+            muted
+          />):(
         <Image
-          src={product.image}
+          src={'/demo.jpg'}
           alt="product"
           height={40}
           width={40}
           priority
           className="md:w-auto w-full object-cover rounded-2xl"
-        />
+          />
+        )
+        }
       </div>
       {/* detail */}
       <div className="w-full md:w-1/2 flex flex-col gap-4 flex-1">

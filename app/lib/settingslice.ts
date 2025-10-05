@@ -67,6 +67,12 @@ const settingslice = createSlice({
         state.setting = { ...state.setting, ...action.payload }
       }
       console.log('After:', state.setting)
+    },
+    // clear setting on logout
+    clearsetting: (state) => {
+      state.setting = null
+      state.isloading = false
+      state.error = ''
     }
   },
   extraReducers: (builder) => {
@@ -91,4 +97,4 @@ const settingslice = createSlice({
 })
 
 export default settingslice.reducer
-export const { updatesettinglocally } = settingslice.actions
+export const { updatesettinglocally, clearsetting } = settingslice.actions

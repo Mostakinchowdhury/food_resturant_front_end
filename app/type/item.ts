@@ -40,23 +40,19 @@ export type product_type = {
 
 export type productimgs_type = {
   id: number
-  image: string
+  file: string
   product: number
 }
 
-
-
 export interface Category {
   id: number
-  products: product_type[]
   name: string
   description: string
   image: string
-  supercategory: number
 }
 
 export interface SuperCategory {
-  id: number;
-  category: Category[];
-  title: string;
+  id: number
+  category: Category[]
+  title: string
 }

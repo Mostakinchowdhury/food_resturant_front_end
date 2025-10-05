@@ -31,7 +31,7 @@ export default async function ResturantPage({
   let data: product_type[] = []
   const results: string = await respons.text()
   try {
-    data = JSON.parse(results)
+    data = JSON.parse(results).results
   } catch {
     data = []
   }

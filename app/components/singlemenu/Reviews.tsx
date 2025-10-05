@@ -1,7 +1,12 @@
+'use client'
 import { product_type } from '@/type/item'
+import { useState } from 'react'
 import { FaRegStar, FaStar } from 'react-icons/fa6'
 
+
 const Reviews = ({ product }: { product: product_type }) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  
   return (
     <div>
       <h2 className="text-size4 md:text-size5 font-bold text-txt2">Reviews</h2>

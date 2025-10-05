@@ -123,9 +123,9 @@ const ProfilePage = () => {
               </Link>
             </div>
           </div>
-          <div className="h-[200px] w-2 rounded-lg bg-primary anmn-1  lg:block hidden" />
+          <div className="lg:h-[200px] rounded-lg bg-primary lg:block hidden" />
           {/* Address page */}
-          <div className="flex flex-col items-start lg:block space-y-3">
+          <div className="flex flex-col items-start w-full lg:block space-y-3">
             <Add_adress_Dialog />
             <h2 className="text-size4 md:text-size5 font-bold text-orange-500 tracking-wide my-2">
               Address

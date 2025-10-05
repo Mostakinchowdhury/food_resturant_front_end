@@ -120,6 +120,12 @@ const profileSlice = createSlice({
       if (state.profile && item) {
         state.profile.addresses = state.profile.addresses.filter((i) => i.id != action.payload)
       }
+    },
+    // clear profile on logout
+    clearprofile: (state) => {
+      state.profile = null
+      state.isloading = false
+      state.error = ''
     }
   },
   extraReducers: (builder) => {
@@ -159,5 +165,5 @@ const profileSlice = createSlice({
 })
 
 export default profileSlice.reducer
-export const { updateprofilelocally, updateadresslocally, deleteadresslocally } =
+export const { updateprofilelocally, updateadresslocally, deleteadresslocally,clearprofile } =
   profileSlice.actions

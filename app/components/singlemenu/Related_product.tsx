@@ -53,17 +53,43 @@ const RelatedProduct = async ({ products }: { products: product_type }) => {
               </div>
               {/* image */}
               <Link href={`/menu/${items.id}`} className="h-full cursor-pointer">
-                <div
+                {items.productimgs[
+                  0] ? 
+                    (items.productimgs[0].file.endsWith('.mp4') || items.productimgs[0].file.endsWith('.mov')) ? (
+                      <video
+                        src={items.productimgs[0].file}
+                        className="h-full w-[205px] overflow-hidden rounded-xl object-cover"
+                        controls
+                        autoPlay
+                        loop
+                        muted
+                      />
+                    ) : (
+                      <div
                   className="h-full w-[205px]
                overflow-hidden rounded-xl bg-center bg-cover bg-no-repeat box-border justify-end flex items-end shrink-0 relative"
                   style={{
-                    backgroundImage: `url(${items.image})`,
+                    backgroundImage:`url(${encodeURI(items.productimgs[0].file)})`,
                     width: '205px'
                   }}
                 >
                   {/* plus place */}
                   <Addtocart id={items.id} />
-                </div>
+                </div>)
+                 :(
+                     <div
+                  className="h-full w-[205px]
+               overflow-hidden rounded-xl bg-center bg-cover bg-no-repeat box-border justify-end flex items-end shrink-0 relative"
+                  style={{
+                    backgroundImage:`url('/demo.jpg')`,
+                    width: '205px'
+                  }}
+                >
+                  {/* plus place */}
+                  <Addtocart id={items.id} />
+                </div>)
+                  }
+
               </Link>
             </div>
           ))}

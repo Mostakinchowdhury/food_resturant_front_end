@@ -10,6 +10,10 @@ import { IoExit } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux'
 import Foldnav from './Foldnav'
 import { Button } from './ui/button'
+import { clearprofile } from '@/lib/profileslice'
+import { clearuser } from '@/lib/userslice'
+import { clearCart } from '@/lib/cartslice'
+import { clearsetting } from '@/lib/settingslice'
 
 export const poppins = Poppins({
   subsets: ['latin'],
@@ -94,6 +98,10 @@ function Navbar() {
             onClick={() => {
               if (isAuthenticated) {
                 dispatch(logout())
+                dispatch(clearprofile())
+                dispatch(clearuser())
+                dispatch(clearCart())
+                dispatch(clearsetting())
               }
             }}
           >

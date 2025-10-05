@@ -48,7 +48,14 @@ const initialState: { user: usertype | null; isloading: boolean; error: string }
 const userslicer = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    // clear user on logout
+    clearuser: (state) => {
+      state.user = null
+      state.isloading = false
+      state.error = ''
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchuser.pending, (state) => {
@@ -64,5 +71,7 @@ const userslicer = createSlice({
       })
   }
 })
+
+export const { clearuser } = userslicer.actions
 
 export default userslicer.reducer

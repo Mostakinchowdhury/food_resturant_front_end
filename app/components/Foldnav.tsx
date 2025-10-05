@@ -20,6 +20,10 @@ import { FaLocationDot, FaTruckPickup } from 'react-icons/fa6'
 import { IoIosCloseCircle, IoIosHome } from 'react-icons/io'
 import { IoLogIn, IoLogOut } from 'react-icons/io5'
 
+import { clearCart } from '@/lib/cartslice'
+import { clearprofile } from '@/lib/profileslice'
+import { clearsetting } from '@/lib/settingslice'
+import { clearuser } from '@/lib/userslice'
 import { LuSquareMenu } from 'react-icons/lu'
 import { MdLocalOffer } from 'react-icons/md'
 import { RiEBike2Fill } from 'react-icons/ri'
@@ -167,6 +171,10 @@ const Foldnav = ({ cls }: menu) => {
                         onClick={() => {
                           if (isAuthenticated) {
                             dispatch(logout())
+                            dispatch(clearprofile())
+                            dispatch(clearuser())
+                            dispatch(clearCart())
+                            dispatch(clearsetting())
                           }
                         }}
                       >
