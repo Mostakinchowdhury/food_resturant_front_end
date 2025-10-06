@@ -41,14 +41,16 @@ const Foldnav = ({ cls }: menu) => {
   const dispatch = useDispatch()
   const pathname = usePathname()
   const profileimg =
-    useSelector((state: RootState) => state.profile.profile?.profile_image) ||
+    useSelector((state: RootState) => state.profile.profile?.profile_imag) ||
     '/deafaltprofile_square.jpg'
   const { isAuthenticated } = useSelector((state: RootState) => state.auth)
   return (
     <>
       <div className={`${cls} fullbg flex  items-center ${poppins.className}`}>
         <div className="p-4 grow">
-          <Image src={'/logo.png'} alt="logo" width={154} height={38} />
+          <Link href={'/'}>
+            <Image src={'/logo.png'} alt="logo" width={154} height={38} />
+          </Link>
         </div>
         <Sheet>
           <SheetContent className="h-full">
@@ -209,7 +211,7 @@ const Foldnav = ({ cls }: menu) => {
                 alt="aycan"
                 width={44}
                 height={44}
-                className="rounded-full border-2 border-accent"
+                className="rounded-full border-2 border-accent size-11 object-cover"
               />
             </Link>
             <p className="font-semibold text-size1 text-white">

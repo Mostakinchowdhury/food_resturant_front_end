@@ -62,13 +62,13 @@ const Footer = () => {
             <Link href={'/get_help'}>
               <p className="font-normal text-size1 text-txt underline">Get help</p>
             </Link>
-            <Link href={'#'}>
-              <p className="font-normal text-size1 text-txt underline">Add your restaurant</p>
+            <Link href={'/applypartner'}>
+              <p className="font-normal text-size1 text-txt underline">Add your shops</p>
             </Link>
-            <Link href={'#'}>
+            <Link href={'/applyrider'}>
               <p className="font-normal text-size1 text-txt underline">Sign up to deliver</p>
             </Link>
-            <Link href={'#'}>
+            <Link href={'/applypartner'}>
               <p className="font-normal text-size1 text-txt underline">Create a business account</p>
             </Link>
           </div>

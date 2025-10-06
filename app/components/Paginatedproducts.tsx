@@ -9,8 +9,8 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 export default function Paginatedimgs({ imgs }: { imgs: productimgs_type[] }) {
   const sortedimgs = imgs.sort((a, b) => {
-    const isImageA = a.file.endsWith('.png') || a.file.endsWith('.jpg')
-    const isImageB = b.file.endsWith('.png') || b.file.endsWith('.jpg')
+    const isImageA = a.file_url.endsWith('.png') || a.file_url.endsWith('.jpg')
+    const isImageB = b.file_url.endsWith('.png') || b.file_url.endsWith('.jpg')
 
     if (isImageA && !isImageB) return -1
     if (!isImageA && isImageB) return 1
@@ -32,17 +32,16 @@ export default function Paginatedimgs({ imgs }: { imgs: productimgs_type[] }) {
           >
             {sortedimgs.map((i, index) => (
               <SwiperSlide key={index} className="!flex justify-center items-center">
-                {i.file.endsWith('.mp4') || i.file.endsWith('.mov') ? (
+                {i.file_url.endsWith('.mp4') || i.file_url.endsWith('.mov') ? (
                   <video
-                    src={i.file}
+                    src={i.file_url}
                     className="lg:w-[600px] lg:h-[600px] md:w-[400px] md:h-[400px] w-[300px] h-[300px] object-cover rounded-2xl block"
                     controls
                     loop
-                    autoPlay
                   />
                 ) : (
                   <Image
-                    src={i.file}
+                    src={i.file_url}
                     alt="product"
                     height={400}
                     width={400}

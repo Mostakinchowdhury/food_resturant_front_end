@@ -3,8 +3,10 @@ export type Shop = {
   name: string
   business_name: string
   business_address: string
-  buesness_logo: string | null
-  owner_photo: string | null
+  buesness_logo: string | null | number
+  buesness_logo_url: string | null
+  owner_photo: string | null | number
+  owner_photo_url: string | null
   status: string
 }
 
@@ -18,7 +20,10 @@ export type Shopdetail = {
   business_type: string
   website: string | null
   description: string | null
-  buesness_logo: string | null
-  owner_photo: string | null
+  buesness_logo: string | null | number
+  buesness_logo_url: string | null
+
+  owner_photo: string | null | number
+  owner_photo_url: string | null
   status: string
 }

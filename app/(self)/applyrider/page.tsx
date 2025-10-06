@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { riderformdata } from '@/type/applyrider'
+import api from '@/utils/api'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, useRef, useState } from 'react'
@@ -12,11 +13,13 @@ const Applyrider = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [formdata, setformdata] = useState<riderformdata>({
     name: '',
+    email: '',
     working_area_address: '',
     permanent_address: '',
     phone_num: '',
     photo: ''
   })
+  const [loading, setloading] = useState<boolean>(false)
   const handlechange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const name = e.target.name
     let value = e.target.value
@@ -53,9 +56,11 @@ const Applyrider = () => {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setloading(true)
     if (!formdata.photo || !(formdata.photo instanceof File)) {
+      setloading(false)
       toast('You are not upload your image please upload first', {
         action: {
           label: 'Undo',
@@ -71,14 +76,67 @@ const Applyrider = () => {
     data.append('permanent_address', formdata.permanent_address)
     data.append('working_area_address', formdata.working_area_address)
     data.append('photo', formdata.photo)
+    data.append('email', formdata.email)
     // fetch and upload to server
-    toast('Form submited succesfully', {
-      action: {
-        label: 'Undo',
-        onClick: () => console.log('Undo')
+    try {
+      const res = await api.post(`riders/`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      if (res.status < 200 || res.status > 299) {
+        setloading(false)
+        toast('Sorry fail to add your request please contact with us', {
+          action: {
+            label: 'Contact us',
+            onClick: () => router.push('/get_help')
+          }
+        })
+        return
       }
+      setloading(false)
+      toast('Congratulation your request submited succesfully', {
+        action: {
+          label: 'Go Home',
+          onClick: () => router.push('/')
+        }
+      })
+    } catch (error: any) {
+      setloading(false)
+
+      if (error.response) {
+        console.log('🛠 Server responded with error:')
+        console.log('Status:', error.response.status)
+        console.log('Data:', error.response.data)
+      } else if (error.request) {
+        console.log('🚫 No response from server:')
+        console.log(error.request)
+      } else {
+        console.log('❌ Request setup error:', error.message)
+      }
+
+      toast(
+        `${
+          `~${Object.keys(error.response?.data || {}).flat()[0]}~:${
+            Object.values(error.response?.data || {}).flat()[0]
+          }` || error.message
+        }`,
+        {
+          action: {
+            label: 'Contact us',
+            onClick: () => router.push('/get_help')
+          }
+        }
+      )
+    }
+    setformdata({
+      name: '',
+      email: '',
+      working_area_address: '',
+      permanent_address: '',
+      phone_num: '',
+      photo: ''
     })
-    router.push('/')
   }
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center rounded-xl p-3 md:p-5 lg:px-18">
@@ -128,9 +186,21 @@ const Applyrider = () => {
                 name="name"
                 required
                 className="border-primary text-size2 focus-visible:ring-0 notudbtn w-full"
-                placeholder="Update your Phone number"
+                placeholder="write your name"
                 onChange={handlechange}
                 type="text"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-primary font-bold text-size3">Email</label>
+              <Input
+                value={formdata.email || ''}
+                name="email"
+                required
+                className="border-primary text-size2 focus-visible:ring-0 notudbtn w-full"
+                placeholder="write your email"
+                onChange={handlechange}
+                type="email"
               />
             </div>
             <div className="flex flex-col gap-2">
@@ -140,7 +210,7 @@ const Applyrider = () => {
                 name="phone_num"
                 required
                 className="border-primary text-size2 focus-visible:ring-0 notudbtn w-full"
-                placeholder="Update your Phone number"
+                placeholder="write your Phone number"
                 onChange={handlechange}
                 type="text"
               />
@@ -167,7 +237,7 @@ const Applyrider = () => {
               type="text"
             />
             <Button type="submit" className="tracking-wider cursor-pointer">
-              Submit
+              {loading ? 'Creating...' : 'Submit'}
             </Button>
           </form>
         </section>

@@ -26,6 +26,10 @@ const ShopDetailPage = () => {
     setLoading(true)
     try {
       const res = await axios.get<ApplyRider>(`${process.env.NEXT_PUBLIC_BACKEND_URL}riders/${id}/`)
+      if (res.status < 199 || res.status > 299) {
+        toast('Sorry fail to collect riders records')
+        return
+      }
       const data = res.data
       setrider(data)
     } catch (error) {

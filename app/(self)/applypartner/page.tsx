@@ -8,7 +8,9 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 import { pertnerformdata } from '@/type/applypertner'
+import api from '@/utils/api'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, useRef, useState } from 'react'
@@ -27,7 +29,8 @@ const Applyrider = () => {
     description: '',
     website: '',
     owner_photo: '',
-    buesness_logo: ''
+    buesness_logo: '',
+    email: ''
   })
   const handlechange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const name = e.target.name
@@ -43,6 +46,8 @@ const Applyrider = () => {
   const [preview, setPreview] = useState<string>('/default img.jpg')
   const [preview2, setPreview2] = useState<string>('/default img.jpg')
 
+  const [loading, setloading] = useState<boolean>(false)
+
   // Image change handler
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -52,11 +57,15 @@ const Applyrider = () => {
           "We're unable to process your image as it exceeds the 2MB limit. Kindly upload a smaller file",
           {
             action: {
-              label: 'Undo',
-              onClick: () => console.log('Undo')
+              label: 'Retry',
+              onClick: () => handleImageChange
             }
           }
         )
+        if (fileInputRef.current) {
+          fileInputRef.current.value = ''
+        }
+
         return
       }
       const url = URL.createObjectURL(file)
@@ -73,11 +82,14 @@ const Applyrider = () => {
           "We're unable to process your icon as it exceeds the 2MB limit. Kindly upload a smaller file",
           {
             action: {
-              label: 'Undo',
-              onClick: () => console.log('Undo')
+              label: 'Retry',
+              onClick: () => handleImageChange2
             }
           }
         )
+        if (fileInputRef2.current) {
+          fileInputRef2.current.value = ''
+        }
         return
       }
       const url = URL.createObjectURL(file)
@@ -86,9 +98,17 @@ const Applyrider = () => {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!formdata.owner_photo || !(formdata.owner_photo instanceof File)) {
+    setloading(true)
+    console.log(formdata)
+    if (
+      !formdata.owner_photo ||
+      !(formdata.owner_photo instanceof File) ||
+      !formdata.buesness_logo ||
+      !(formdata.buesness_logo instanceof File)
+    ) {
+      setloading(false)
       toast('You are not upload your image please upload first', {
         action: {
           label: 'Undo',
@@ -108,15 +128,58 @@ const Applyrider = () => {
     data.append('description', formdata.description)
     data.append('buesness_logo', formdata.buesness_logo)
     data.append('owner_photo', formdata.owner_photo)
+    data.append('email', formdata.email)
     // fetch and upload to server
-    toast('Form submited succesfully', {
-      action: {
-        label: 'Go home',
-        onClick: () => router.push('/')
+    try {
+      const res = await api.post(`shops/`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      if (res.status < 200 || res.status > 299) {
+        setloading(false)
+        toast('Sorry fail to add your request please contact with us', {
+          action: {
+            label: 'Contact us',
+            onClick: () => router.push('/get_help')
+          }
+        })
+        return
       }
-    })
-    for (const [k, v] of data.entries()) {
-      console.log(`${k}:${v}`)
+      setloading(false)
+      toast('Congratulation your request submited succesfully', {
+        action: {
+          label: 'Go Home',
+          onClick: () => router.push('/')
+        }
+      })
+    } catch (error: any) {
+      setloading(false)
+
+      if (error.response) {
+        console.log('🛠 Server responded with error:')
+        console.log('Status:', error.response.status)
+        console.log('Data:', error.response.data)
+      } else if (error.request) {
+        console.log('🚫 No response from server:')
+        console.log(error.request)
+      } else {
+        console.log('❌ Request setup error:', error.message)
+      }
+
+      toast(
+        `Found a error ${
+          `~${Object.keys(error.response?.data || {}).flat()[0]}~:${
+            Object.values(error.response?.data || {}).flat()[0]
+          }` || error.message
+        }`,
+        {
+          action: {
+            label: 'Contact us',
+            onClick: () => router.push('/get_help')
+          }
+        }
+      )
     }
     setformdata({
       name: '',
@@ -127,7 +190,8 @@ const Applyrider = () => {
       description: '',
       website: '',
       owner_photo: '',
-      buesness_logo: ''
+      buesness_logo: '',
+      email: ''
     })
     setPreview('/default img.jpg')
     setPreview2('/default img.jpg')
@@ -220,6 +284,18 @@ const Applyrider = () => {
               />
             </div>
             <div className="flex flex-col gap-2">
+              <label className="text-primary font-bold text-size3">Email</label>
+              <Input
+                value={formdata.email || ''}
+                name="email"
+                required
+                className="border-primary text-size2 focus-visible:ring-0 notudbtn w-full"
+                placeholder="write your email"
+                onChange={handlechange}
+                type="email"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
               <label className="text-primary font-bold text-size3">Phone number</label>
               <Input
                 value={formdata.phone_num || ''}
@@ -259,14 +335,13 @@ const Applyrider = () => {
             </Select>{' '}
             {/* ---------- */}
             <label className="text-primary font-bold text-size3">Buesness description</label>
-            <Input
+            <Textarea
               value={formdata.description}
               required
               name="description"
               className="border-primary text-size2 focus-visible:ring-0 notudbtn w-full"
               placeholder="Write your buesness description"
               onChange={handlechange}
-              type="text"
             />
             <label className="text-primary font-bold text-size3">Buesness Address</label>
             <Input
@@ -290,7 +365,7 @@ const Applyrider = () => {
               type="url"
             />
             <Button type="submit" className="tracking-widest cursor-pointer">
-              Submit
+              {loading ? 'Creating...' : 'Submit'}
             </Button>
           </form>
         </section>

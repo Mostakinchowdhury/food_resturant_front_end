@@ -40,7 +40,8 @@ export type product_type = {
 
 export type productimgs_type = {
   id: number
-  file: string
+  file: string | number,
+  file_url:string,
   product: number
 }
 
@@ -48,7 +49,8 @@ export interface Category {
   id: number
   name: string
   description: string
-  image: string
+  image: string | number,
+  image_url:string,
 }
 
 export interface SuperCategory {

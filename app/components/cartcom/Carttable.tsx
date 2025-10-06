@@ -50,47 +50,35 @@ const Carttable = () => {
                         dispatch(toogleischeaked({ id: item.id, ischeaked: !item.ischeaked }))
                       }}
                     />
-                    {item.product_detail.productimgs.length>0 ? (
-                      item.product_detail.productimgs[0]?.file?.endsWith('.mp4') ||
-                      item.product_detail.productimgs[0]?.file?.endsWith('.mov') ? (
-                        <video
-                          src={item.product_detail?.productimgs[0].file}
-                          className="md:w-auto w-full object-cover rounded-2xl"
-                          controls
-                          autoPlay
-                          loop
-                          muted
-                        />
-                      ) : (
-                        <Image
-                          src={item.product_detail?.productimgs[0].file}
-                          alt="product"
-                          height={80}
-                          width={80}
-                          priority
-                          className={`rounded-lg block object-cover border-2 ${
-                            item.ischeaked ? 'border-primary' : 'border-gray-400'
-                          }`}
-                        />
-                      )
+                    {item.product_detail.productimgs.filter(
+                      (i) => i.file_url.endsWith('.png') || i.file_url.endsWith('.jpg')
+                    )[0].file_url ? (
+                      <Image
+                        src={
+                          item.product_detail.productimgs.filter(
+                            (i) => i.file_url.endsWith('.png') || i.file_url.endsWith('.jpg')
+                          )[0].file_url
+                        }
+                        alt="product"
+                        height={60}
+                        width={60}
+                        priority
+                        className={`rounded-lg block object-cover border-2 size-14 ${
+                          item.ischeaked ? 'border-primary' : 'border-gray-400'
+                        }`}
+                      />
                     ) : (
                       <Image
                         src={'/demo.jpg'}
                         alt="product"
-                        height={80}
-                        width={80}
+                        height={60}
+                        width={60}
                         priority
-                        className={`rounded-lg block object-cover border-2 ${
+                        className={`rounded-lg block object-cover border-2 size-14 ${
                           item.ischeaked ? 'border-primary' : 'border-gray-400'
                         }`}
                       />
                     )}
-                    <Image
-                      src={item.product_detail.productimgs[0]?.file || '/demo.jpg'}
-                      width={80}
-                      height={80}
-                      alt="cart item"
-                    />
                     <div className="flex flex-col items-start">
                       <h3 className="font-semibold text-size3 md:text-size4">
                         {item.product_detail.name}

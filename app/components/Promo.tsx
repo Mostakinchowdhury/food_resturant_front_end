@@ -41,7 +41,7 @@ function Promo() {
 
   const total_quantity = useSelector((state: RootState) => state.cart.cart?.total_quantity)
   const profileimg =
-    useSelector((state: RootState) => state.profile.profile?.profile_image) ||
+    useSelector((state: RootState) => state.profile.profile?.profile_imag) ||
     '/deafaltprofile_square.jpg'
   const closeref = useRef<HTMLButtonElement | null>(null)
   const hanlesubmit = (e: React.FormEvent<HTMLFormElement>) => {

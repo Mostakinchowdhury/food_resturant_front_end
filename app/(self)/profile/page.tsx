@@ -11,7 +11,7 @@ import { toast } from 'sonner'
 
 const ProfilePage = () => {
   const profileimg =
-    useSelector((state: RootState) => state.profile.profile?.profile_image) ||
+    useSelector((state: RootState) => state.profile.profile?.profile_imag) ||
     '/deafaltprofile_square.jpg'
   const profile = useSelector((state: RootState) => state.profile.profile)
   const setting = useSelector((state: RootState) => state.setting.setting)

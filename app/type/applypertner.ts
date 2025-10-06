@@ -1,5 +1,6 @@
 export type pertnerformdata = {
   name: string
+  email: string
   phone_num: string
   business_name: string
   business_address: string

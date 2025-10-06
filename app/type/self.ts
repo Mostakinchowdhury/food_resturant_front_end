@@ -32,7 +32,8 @@ export type profile = {
   bio: null | string
   gender: string
   birth_date: null | string
-  profile_image: null | string
+  profile_image: null | string | number
+  profile_imag: null | string
   user: number
 }
 // optional profile

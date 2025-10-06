@@ -1,4 +1,5 @@
 'use client'
+import Blurload from '@/components/Blurload'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
@@ -30,9 +31,10 @@ import { toast } from 'sonner'
 
 const ProfilePage = () => {
   const router = useRouter()
+  const [imgloading, setimgloading] = useState<boolean>(false)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const profileimg =
-    useSelector((state: RootState) => state.profile.profile?.profile_image) ||
+    useSelector((state: RootState) => state.profile.profile?.profile_imag) ||
     '/deafaltprofile_square.jpg'
   const profile = useSelector((state: RootState) => state.profile.profile)
   const dispatch = useDispatch<AppDispatch>()
@@ -68,6 +70,7 @@ const ProfilePage = () => {
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
+      setimgloading(true)
       const url = URL.createObjectURL(file)
       setPreview(url)
       const formData = new FormData()
@@ -77,6 +80,7 @@ const ProfilePage = () => {
           headers: { 'Content-Type': 'multipart/form-data' }
         })
         if (res.status < 200 || res.status > 299) {
+          setimgloading(false)
           toast('Fail to changed profile image', {
             action: {
               label: 'Go to profile',
@@ -87,6 +91,7 @@ const ProfilePage = () => {
         console.log('____HYGTH_____')
         console.log(res.data)
         console.log('____HYGTH_____')
+        setimgloading(false)
         toast('Profile image changed succesfully', {
           action: {
             label: 'Go to profile',
@@ -95,6 +100,7 @@ const ProfilePage = () => {
         })
         dispatch(changeprofile(url))
       } catch (error: any) {
+        setimgloading(false)
         if (error.response) {
           console.log('🛑 Server Error:', error.response.data) // Django কী error পাঠিয়েছে
           console.log('🔢 Status:', error.response.status)
@@ -116,6 +122,7 @@ const ProfilePage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setimgloading(true)
     console.log(formdata)
     const data = new FormData()
     data.append('phone_num', formdata.phone_num)
@@ -138,6 +145,7 @@ const ProfilePage = () => {
         const { profile_image, birth_date, ...frmcopy } = formdata
         dispatch(updateprofilelocally({ ...frmcopy }))
       }
+      setimgloading(false)
       toast('Form submited succesfully', {
         action: {
           label: 'Go to profile',
@@ -145,6 +153,7 @@ const ProfilePage = () => {
         }
       })
     } catch (e) {
+      setimgloading(false)
       toast('Something went wrong', {
         action: {
           label: 'try again',
@@ -160,8 +169,11 @@ const ProfilePage = () => {
       dispatch(fetchprofile())
     }
   }, [needfetch, birthDateChanged])
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center rounded-xl p-3 md:p-5 lg:px-18">
+      {imgloading && <Blurload text="UPDATING..." />}
+
       <div className="bg-white shadow-md rounded-lg p-6 w-full md:max-w-md">
         {/* profile base */}
         <div className="text-center">

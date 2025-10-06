@@ -124,7 +124,7 @@ const profileSlice = createSlice({
     // change profile img url locally
     changeprofile: (state, action: PayloadAction<string>) => {
       if (state.profile) {
-        state.profile.profile_image = action.payload
+        state.profile.profile_imag = action.payload
       }
     },
     // clear profile on logout

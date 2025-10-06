@@ -1,6 +1,6 @@
 'use client'
 
-import LoadingLoader from '@/components/Loader'
+import Blurload from '@/components/Blurload'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ApplyRider } from '@/type/applyrider'
@@ -70,7 +70,7 @@ const ShopsPage = () => {
       </div>
 
       {loading ? (
-        <LoadingLoader text="Riders Fetching" />
+        <Blurload text="Collecting..." />
       ) : shops.length === 0 ? (
         <p className="text-center my-6">No Riders found.</p>
       ) : (
@@ -81,9 +81,9 @@ const ShopsPage = () => {
               className="rounded-xl p-2 flex flex-col items-center shadow hover:shadow-lg transition bg-gray-100 py-4"
             >
               <Link href={`/riders/${riders.id}`}>
-                {riders.photo ? (
+                {riders.photo_url ? (
                   <Image
-                    src={riders.photo}
+                    src={riders.photo_url}
                     alt={riders.name + ' photo'}
                     width={150}
                     height={150}
@@ -96,7 +96,7 @@ const ShopsPage = () => {
                     alt={riders.name + ' photo'}
                     width={150}
                     height={150}
-                    className="rounded-lg object-cover mb-4 border-2 [300px] h-[300px] border-accent"
+                    className="rounded-lg object-cover mb-4 w-[300px] h-[300px] border-2 border-accent"
                   />
                 )}
               </Link>

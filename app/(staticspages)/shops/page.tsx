@@ -1,6 +1,6 @@
 'use client'
 
-import LoadingLoader from '@/components/Loader'
+import Blurload from '@/components/Blurload'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Shop } from '@/type/bueness'
@@ -61,7 +61,7 @@ const ShopsPage = () => {
       </div>
 
       {loading ? (
-        <LoadingLoader text="Shop Fetching" />
+        <Blurload text="Collecting..." />
       ) : shops.length === 0 ? (
         <p className="text-center my-6">No shops found.</p>
       ) : (
@@ -72,9 +72,9 @@ const ShopsPage = () => {
               className="rounded-xl p-2 flex flex-col items-center shadow hover:shadow-lg transition bg-gray-100 py-4"
             >
               <Link href={`/shops/${shop.id}`}>
-                {shop.buesness_logo ? (
+                {shop.buesness_logo_url ? (
                   <Image
-                    src={shop.buesness_logo}
+                    src={shop.buesness_logo_url}
                     alt={shop.business_name}
                     width={150}
                     height={150}

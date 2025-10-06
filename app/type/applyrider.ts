@@ -1,5 +1,6 @@
 export type riderformdata = {
-  name: string
+  name: string,
+  email:string,
   phone_num: string
   working_area_address: string
   permanent_address: string
@@ -15,7 +16,8 @@ export interface ApplyRider {
   phone_num: string
   working_area_address: string
   permanent_address: string
-  photo: string | null // Cloudinary URL
+  photo: string | null | number,
+  photo_url:string | null// Cloudinary URL
   created_at?: string // read-only (ISO date string)
   updated_at?: string // read-only (ISO date string)
   status: 'PENDING' | 'APPROVED' | 'REJECTED' | string // depends on APPLY_CHOICE

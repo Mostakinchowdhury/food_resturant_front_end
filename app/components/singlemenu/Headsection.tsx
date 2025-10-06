@@ -10,7 +10,7 @@ const HeadSection = ({ product }: { product: product_type }) => {
   console.log('from singe')
   console.log(product)
   const isvideo: boolean =
-    product.productimgs[0].file?.endsWith('.mp4') || product.productimgs[0].file?.endsWith('.mov')
+    product.productimgs[0].file_url?.endsWith('.mp4') || product.productimgs[0].file_url?.endsWith('.mov')
   return (
     <div
       className={`flex flex-col md:flex-row items-stretch md:gap-10 gap-4 p-4 bg-white shadow-md rounded-lg ${poppins.className}`}

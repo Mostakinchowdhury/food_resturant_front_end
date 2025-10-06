@@ -5,7 +5,8 @@ export type formdata = {
   gender: string
   birth_date: Date | null
   bio: string
-  profile_image: string | File // <-- এখানে union টাইপ কর
+  profile_imag?: string | File
+  profile_image?: string | File |number// <-- এখানে union টাইপ কর
 }
 export type formdata_setting = {
   id: number
@@ -22,7 +23,7 @@ export type formdata_resetpassword = {
   password: string
   confirm_password: string
   token: string
-  uidb64:string
+  uidb64: string
 }
 
 // formdatat type for adress

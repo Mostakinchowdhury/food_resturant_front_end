@@ -48,9 +48,9 @@ const ShopDetailPage = () => {
         <div className="flex flex-col md:flex-row gap-4">
           {/* Business Logo */}
           <div className="flex-shrink-0">
-            {shop.buesness_logo ? (
+            {shop.buesness_logo_url ? (
               <Image
-                src={shop.buesness_logo}
+                src={shop.buesness_logo_url}
                 alt={shop.business_name}
                 width={250}
                 height={250}
@@ -141,11 +141,11 @@ const ShopDetailPage = () => {
         </div>
 
         {/* Owner Photo */}
-        {shop.owner_photo && (
+        {shop.owner_photo_url && (
           <div className="flex flex-col items-center justify-center">
             <h2 className="text-xl font-semibold mb-2">Owner Photo</h2>
             <Image
-              src={shop.owner_photo}
+              src={shop.owner_photo_url}
               alt={shop.name}
               width={150}
               height={150}

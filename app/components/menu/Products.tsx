@@ -51,7 +51,7 @@ const Products = async ({
                 {/* image */}
                 <Link href={`/menu/${items.id}`} className="cursor-pointer h-full">
                   {items.productimgs.filter(
-                    (i) => i.file.endsWith('.png') || i.file.endsWith('.jpg')
+                    (i) => i.file_url.endsWith('.png') || i.file_url.endsWith('.jpg')
                   ).length > 0 ? (
                     <div
                       className="h-full w-[205px]
@@ -59,8 +59,8 @@ const Products = async ({
                       style={{
                         backgroundImage: `url(${encodeURI(
                           items.productimgs.filter(
-                            (i) => i.file.endsWith('.png') || i.file.endsWith('.jpg')
-                          )[0].file
+                            (i) => i.file_url.endsWith('.png') || i.file_url.endsWith('.jpg')
+                          )[0].file_url
                         )})`,
                         width: '205px'
                       }}
