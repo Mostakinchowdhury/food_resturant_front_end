@@ -53,16 +53,17 @@ const RelatedProduct = async ({ products }: { products: product_type }) => {
               </div>
               {/* image */}
               <Link href={`/menu/${items.id}`} className="h-full cursor-pointer">
-                {items.productimgs.filter((i) => i.file.endsWith('.png') || i.file.endsWith('.jpg'))
-                  .length > 0 ? (
+                {items.productimgs.filter(
+                  (i) => i.file_url.endsWith('.png') || i.file_url.endsWith('.jpg')
+                ).length > 0 ? (
                   <div
                     className="h-full w-[205px]
                overflow-hidden rounded-xl bg-center bg-cover bg-no-repeat box-border justify-end flex items-end shrink-0 relative"
                     style={{
                       backgroundImage: `url(${encodeURI(
                         items.productimgs.filter(
-                          (i) => i.file.endsWith('.png') || i.file.endsWith('.jpg')
-                        )[0].file
+                          (i) => i.file_url.endsWith('.png') || i.file_url.endsWith('.jpg')
+                        )[0].file_url
                       )})`,
                       width: '205px'
                     }}
