@@ -14,7 +14,7 @@ import { toast } from 'sonner'
 const ChangePasswordpage = () => {
   const router = useRouter()
   const profileimg =
-    useSelector((state: RootState) => state.profile.profile?.profile_image) ||
+    useSelector((state: RootState) => state.profile.profile?.profile_imag) ||
     '/deafaltprofile_square.jpg'
   const user = useSelector((state: RootState) => state.user.user)
   // loading state

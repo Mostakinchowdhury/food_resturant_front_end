@@ -15,7 +15,7 @@ import { toast } from 'sonner'
 const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
   const router = useRouter()
   const profileimg =
-    useSelector((state: RootState) => state.profile.profile?.profile_image) ||
+    useSelector((state: RootState) => state.profile.profile?.profile_imag) ||
     '/deafaltprofile_square.jpg'
   const adress = useSelector((state: RootState) => state.profile.profile?.addresses)?.find(
     (i) => i.id == parseInt(searchParams.i || '0')
