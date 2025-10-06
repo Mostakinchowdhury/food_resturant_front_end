@@ -50,9 +50,9 @@ const ShopDetailPage = () => {
         <div className="flex flex-col md:flex-row gap-6 mx-auto p-8">
           {/* Business Logo */}
           <div className="flex-shrink-0">
-            {rider.photo ? (
+            {rider.photo_url ? (
               <Image
-                src={rider.photo}
+                src={rider.photo_url}
                 alt={rider.name + "'s photo"}
                 width={250}
                 height={250}
