@@ -1,6 +1,10 @@
 'use client'
 import { logout } from '@/lib/authcreateslice'
+import { clearCart } from '@/lib/cartslice'
 import { RootState } from '@/lib/configstore'
+import { clearprofile } from '@/lib/profileslice'
+import { clearsetting } from '@/lib/settingslice'
+import { clearuser } from '@/lib/userslice'
 import { Poppins } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -10,10 +14,6 @@ import { IoExit } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux'
 import Foldnav from './Foldnav'
 import { Button } from './ui/button'
-import { clearprofile } from '@/lib/profileslice'
-import { clearuser } from '@/lib/userslice'
-import { clearCart } from '@/lib/cartslice'
-import { clearsetting } from '@/lib/settingslice'
 
 export const poppins = Poppins({
   subsets: ['latin'],
@@ -77,6 +77,26 @@ function Navbar() {
               Restaurants
             </Link>
           </li> */}
+          <li className="flexcontainer items-center">
+            <Link
+              href="/shops"
+              className={`${poppins.className} navlink ${
+                pathname === '/shops' ? 'bg-primary text-bg1' : ''
+              }`}
+            >
+              Shops
+            </Link>
+          </li>
+          <li className="flexcontainer items-center">
+            <Link
+              href="/riders"
+              className={`${poppins.className} navlink ${
+                pathname === '/riders' ? 'bg-primary text-bg1' : ''
+              }`}
+            >
+              Riders
+            </Link>
+          </li>
           <li className="flexcontainer items-center">
             <Link
               href="/orders"

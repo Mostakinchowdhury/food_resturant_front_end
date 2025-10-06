@@ -78,7 +78,7 @@ const ShopsPage = () => {
                     alt={shop.business_name}
                     width={150}
                     height={150}
-                    className="rounded-lg object-cover mb-4 border-2 border-accent"
+                    className="rounded-lg object-cover w-[300px] h-[300px] mb-4 border-2 border-accent"
                   />
                 ) : (
                   //
@@ -87,7 +87,7 @@ const ShopsPage = () => {
                     alt={shop.business_name}
                     width={150}
                     height={150}
-                    className="rounded-lg object-cover mb-4 border-2 border-accent"
+                    className="rounded-lg object-cover mb-4 w-[300px] h-[300px] border-2 border-accent"
                   />
                 )}
               </Link>

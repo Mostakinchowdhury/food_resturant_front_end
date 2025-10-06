@@ -54,7 +54,7 @@ const ShopDetailPage = () => {
                 alt={shop.business_name}
                 width={250}
                 height={250}
-                className="rounded-lg object-cover"
+                className="rounded-lg object-cover size-80"
               />
             ) : (
               <Image
@@ -62,7 +62,7 @@ const ShopDetailPage = () => {
                 alt={shop.business_name}
                 width={250}
                 height={250}
-                className="rounded-lg object-cover"
+                className="rounded-lg object-cover size-80"
               />
             )}
           </div>
@@ -149,7 +149,7 @@ const ShopDetailPage = () => {
               alt={shop.name}
               width={150}
               height={150}
-              className="rounded-full object-cover border-2 border-accent"
+              className="rounded-full object-cover border-2 border-accent size-78"
             />
           </div>
         )}
