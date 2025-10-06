@@ -12,12 +12,18 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { AppDispatch, RootState } from '@/lib/configstore'
-import { fetchprofile, updateprofile, updateprofilelocally } from '@/lib/profileslice'
+import {
+  changeprofile,
+  fetchprofile,
+  updateprofile,
+  updateprofilelocally
+} from '@/lib/profileslice'
 import { formdata } from '@/type/editprofiletype'
+import api from '@/utils/api'
 import { ChevronDownIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { ChangeEvent, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { MdVerified } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'sonner'
@@ -56,29 +62,67 @@ const ProfilePage = () => {
   }
   const [preview, setPreview] = useState<string>(profileimg)
   const [birthDateChanged, setBirthDateChanged] = useState(false)
+  const [needfetch, setneedfetch] = useState<boolean>(false)
 
   // Image change handler
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       const url = URL.createObjectURL(file)
       setPreview(url)
-      setformdata((data) => ({ ...data, profile_image: file }))
-      console.log(file + 'and ', url)
+      const formData = new FormData()
+      formData.append('profile_image', file)
+      try {
+        const res = await api.patch(`profiles/${profile?.id}/`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
+        if (res.status < 200 || res.status > 299) {
+          toast('Fail to changed profile image', {
+            action: {
+              label: 'Go to profile',
+              onClick: () => router.push('/profile')
+            }
+          })
+        }
+        console.log('____HYGTH_____')
+        console.log(res.data)
+        console.log('____HYGTH_____')
+        toast('Profile image changed succesfully', {
+          action: {
+            label: 'Go to profile',
+            onClick: () => router.push('/profile')
+          }
+        })
+        dispatch(changeprofile(url))
+      } catch (error: any) {
+        if (error.response) {
+          console.log('🛑 Server Error:', error.response.data) // Django কী error পাঠিয়েছে
+          console.log('🔢 Status:', error.response.status)
+        } else if (error.request) {
+          console.log('🚫 No response received:', error.request)
+        } else {
+          console.log('❌ Error setting up request:', error.message)
+        }
+
+        toast(`Server Error: cheak consol`, {
+          action: {
+            label: 'Check Console',
+            onClick: () => console.log(error.response?.data)
+          }
+        })
+      }
     }
-    console.log(file)
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
+    console.log(formdata)
     const data = new FormData()
     data.append('phone_num', formdata.phone_num)
     data.append('country', formdata.country)
     data.append('gender', formdata.gender)
     data.append('bio', formdata.bio)
 
-    let needfetch: boolean = false
     if (formdata.birth_date instanceof Date) {
       const date = formdata.birth_date
       const localDate = `${date.getFullYear()}-${(date.getMonth() + 1)
@@ -86,26 +130,36 @@ const ProfilePage = () => {
         .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`
       data.append('birth_date', localDate)
     }
-    if (formdata.profile_image instanceof File) {
-      data.append('profile_image', formdata.profile_image)
-      needfetch = true
-    }
     const id = formdata.id
-    dispatch(updateprofile({ id, data }))
-    if (needfetch || birthDateChanged) {
-      dispatch(fetchprofile())
-    } else {
-      const { profile_image, birth_date, ...frmcopy } = formdata
-      dispatch(updateprofilelocally({ ...frmcopy }))
-    }
-    toast('Form submited succesfully', {
-      action: {
-        label: 'Undo',
-        onClick: () => console.log('Undo')
+    try {
+      await dispatch(updateprofile({ id, data }))
+
+      if (!needfetch && !birthDateChanged) {
+        const { profile_image, birth_date, ...frmcopy } = formdata
+        dispatch(updateprofilelocally({ ...frmcopy }))
       }
-    })
-    router.push('/profile')
+      toast('Form submited succesfully', {
+        action: {
+          label: 'Go to profile',
+          onClick: () => router.push('/profile')
+        }
+      })
+    } catch (e) {
+      toast('Something went wrong', {
+        action: {
+          label: 'try again',
+          onClick: () => handleSubmit
+        }
+      })
+    }
   }
+
+  useEffect(() => {
+    if (needfetch || birthDateChanged) {
+      setneedfetch(false)
+      dispatch(fetchprofile())
+    }
+  }, [needfetch, birthDateChanged])
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center rounded-xl p-3 md:p-5 lg:px-18">
       <div className="bg-white shadow-md rounded-lg p-6 w-full md:max-w-md">
@@ -158,7 +212,7 @@ const ProfilePage = () => {
         <section className="mt-10 space-y-2">
           <form
             method="POST"
-            encType="multipart/formdata"
+            encType="multipart/form-data"
             className=" mt-10 space-y-2"
             onSubmit={handleSubmit}
           >

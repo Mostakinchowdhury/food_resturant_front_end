@@ -1,9 +1,9 @@
 import { product_type } from '@/type/item'
 import { Route } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { FaRegStar, FaStar } from 'react-icons/fa'
 import { poppins } from '../Navbar'
+import Paginatedimgs from '../Paginatedproducts'
 import Detailaddtocart from './Detailaddtocart'
 
 const HeadSection = ({ product }: { product: product_type }) => {
@@ -17,35 +17,7 @@ const HeadSection = ({ product }: { product: product_type }) => {
     >
       <div className="w-full md:w-1/2 flex-1 flex">
         {/* product image */}
-        {product.productimgs.length > 0 ? (
-          isvideo ? (
-            <video
-              src={product.productimgs[0]?.file}
-              className="md:w-auto w-full object-cover rounded-2xl"
-              controls
-              autoPlay
-              loop
-            />
-          ) : (
-            <Image
-              src={product.productimgs[0]?.file}
-              alt="product"
-              height={80}
-              width={80}
-              priority
-              className="md:w-auto w-full object-cover rounded-2xl"
-            />
-          )
-        ) : (
-          <Image
-            src={'/demo.jpg'}
-            alt="product"
-            height={40}
-            width={40}
-            priority
-            className="md:w-auto w-full object-cover rounded-2xl"
-          />
-        )}
+        <Paginatedimgs imgs={product.productimgs} />
       </div>
       {/* detail */}
       <div className="w-full md:w-1/2 flex flex-col gap-4 flex-1">

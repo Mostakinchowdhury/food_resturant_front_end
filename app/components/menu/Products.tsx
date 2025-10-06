@@ -50,30 +50,24 @@ const Products = async ({
                 </div>
                 {/* image */}
                 <Link href={`/menu/${items.id}`} className="cursor-pointer h-full">
-                  {items.productimgs[0] ? (
-                    items.productimgs[0].file.endsWith('.mp4') ||
-                    items.productimgs[0].file.endsWith('.mov') ? (
-                      <video
-                        src={items.productimgs[0].file}
-                        className="h-full w-[205px] overflow-hidden rounded-xl object-cover"
-                        controls
-                        autoPlay
-                        loop
-                        muted
-                      />
-                    ) : (
-                      <div
-                        className="h-full w-[205px]
+                  {items.productimgs.filter(
+                    (i) => i.file.endsWith('.png') || i.file.endsWith('.jpg')
+                  ).length > 0 ? (
+                    <div
+                      className="h-full w-[205px]
                overflow-hidden rounded-xl bg-center bg-cover bg-no-repeat box-border justify-end flex items-end shrink-0 relative"
-                        style={{
-                          backgroundImage: `url(${encodeURI(items.productimgs[0].file)})`,
-                          width: '205px'
-                        }}
-                      >
-                        {/* plus place */}
-                        <Addtocart id={items.id} />
-                      </div>
-                    )
+                      style={{
+                        backgroundImage: `url(${encodeURI(
+                          items.productimgs.filter(
+                            (i) => i.file.endsWith('.png') || i.file.endsWith('.jpg')
+                          )[0].file
+                        )})`,
+                        width: '205px'
+                      }}
+                    >
+                      {/* plus place */}
+                      <Addtocart id={items.id} />
+                    </div>
                   ) : (
                     <div
                       className="h-full w-[205px]

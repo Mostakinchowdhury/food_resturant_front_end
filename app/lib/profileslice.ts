@@ -121,6 +121,12 @@ const profileSlice = createSlice({
         state.profile.addresses = state.profile.addresses.filter((i) => i.id != action.payload)
       }
     },
+    // change profile img url locally
+    changeprofile: (state, action: PayloadAction<string>) => {
+      if (state.profile) {
+        state.profile.profile_image = action.payload
+      }
+    },
     // clear profile on logout
     clearprofile: (state) => {
       state.profile = null
@@ -165,5 +171,10 @@ const profileSlice = createSlice({
 })
 
 export default profileSlice.reducer
-export const { updateprofilelocally, updateadresslocally, deleteadresslocally,clearprofile } =
-  profileSlice.actions
+export const {
+  updateprofilelocally,
+  updateadresslocally,
+  deleteadresslocally,
+  clearprofile,
+  changeprofile
+} = profileSlice.actions
