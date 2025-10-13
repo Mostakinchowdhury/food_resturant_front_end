@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
-const SignPage = ({ searchParams }: { searchParams?: { email?: string } }) => {
+const SignPage = ({ searchParams }: { searchParams: { email: string } }) => {
   const router = useRouter()
-  const email = searchParams?.email
+  const email = searchParams.email || ''
   const myForm = useRef<HTMLFormElement | null>(null)
   const [formdata, setFormdata] = useState<field_type>({
     field1: '',
@@ -81,7 +81,7 @@ const SignPage = ({ searchParams }: { searchParams?: { email?: string } }) => {
         })
         return
       }
-      toast(`We sent a new OTP to your Email: ${email ? email : ''}`, {
+      toast(data.message || 'Otp resend Succesfull', {
         action: {
           label: 'Undo',
           onClick: () => {
@@ -174,7 +174,16 @@ const SignPage = ({ searchParams }: { searchParams?: { email?: string } }) => {
 
   useEffect(() => {
     if (!email) {
-      router.push('/sign')
+      toast('Email not found', {
+        style: {
+          color: 'red',
+          fontSize: '18px',
+          fontWeight: '700'
+        }
+      })
+      setTimeout(() => {
+        router.push('/sign')
+      }, 500)
     }
     inputs.current[0].focus()
   }, [email, router])

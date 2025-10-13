@@ -1,4 +1,5 @@
 'use client'
+import Blurload from '@/components/Blurload'
 import { poppins } from '@/components/Navbar'
 import { Button } from '@/components/ui/button'
 import { loginSuccess } from '@/lib/authcreateslice'
@@ -11,6 +12,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa6'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'sonner'
 
 const SignPage = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true)
@@ -47,6 +49,7 @@ const SignPage = () => {
     setIsLoading(true)
     if (!isLogin && formdata.password !== formdata.password2) {
       setError('Passwords do not match')
+      toast('Passwords do not match')
       setIsLoading(false)
       return
     }
@@ -83,44 +86,52 @@ const SignPage = () => {
       }
 
       if (!response.ok) {
-        setError(data)
         setIsLoading(false)
+        setError(data)
       } else {
         setSuccess(isLogin ? data.message : data)
-        dispatch(
-          loginSuccess({
-            accessToken: data.access,
-            refreshToken: data.refresh
-          })
-        )
-
         if (isLogin) {
+          setIsLoading(false)
+          dispatch(
+            loginSuccess({
+              accessToken: data.access,
+              refreshToken: data.refresh
+            })
+          )
           const isvaild = await isvalidtoken()
           if (isvaild) {
-            router.push('/profile')
+            setTimeout(() => {
+              router.push('/profile')
+            }, 3000)
           }
         } else {
-          router.push(`/verifyemail?email=${encodeURIComponent(formdata.email)}`) // navigate to verify email page
-        }
-        console.log(data)
-        setIsLoading(false)
-        // navigate to verify email page
-        if (!isLogin) {
+          setIsLogin(false)
+          toast('🎉 Account created successfully. Redirecting in 3 seconds...', {
+            duration: 3000,
+            style: {
+              color: 'green',
+              fontSize: '18px',
+              fontWeight: 'bold'
+            }
+          })
           setTimeout(() => {
             router.push(`/verifyemail?email=${encodeURIComponent(formdata.email)}`)
-          }, 1000)
+          }, 3000)
+          setIsLoading(false)
         }
-        setFormdata({
-          first_name: '',
-          last_name: '',
-          email: '',
-          password: '',
-          password2: ''
-        })
       }
+      setFormdata({
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        password2: ''
+      })
     } catch (error) {
       setError(`Something went wrong ${JSON.stringify(error)}`)
       console.log(error)
+      setIsLoading(false)
+    } finally {
       setIsLoading(false)
     }
   }
@@ -133,6 +144,7 @@ const SignPage = () => {
     <section
       className={`flex flex-col md:flex-row items-stretch md:gap-10 gap-4 p-4 bg-txt2 shadow-md rounded-lg ${poppins.className}`}
     >
+      {isLoading && <Blurload text="" />}
       {/* image section */}
       <div className="w-full md:w-1/2 flex-1 md:flex hidden">
         <Image
@@ -154,7 +166,16 @@ const SignPage = () => {
           {isLogin ? 'Not a member? ' : 'Already have an account? '}{' '}
           <span
             className="underline text-blue-800 cursor-pointer"
-            onClick={() => setIsLogin(!isLogin)}
+            onClick={() => {
+              setIsLogin(!isLogin)
+              setFormdata({
+                first_name: '',
+                last_name: '',
+                email: '',
+                password: '',
+                password2: ''
+              })
+            }}
           >
             {isLogin ? 'Create account' : 'Login'}
           </span>
