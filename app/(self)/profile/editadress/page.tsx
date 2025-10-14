@@ -43,12 +43,10 @@ const ProfilePage = () => {
     const name = e.target.name
     const value = e.target.value
     setformdata((data) => ({ ...data, [name]: value }))
-    console.log(formdata)
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(formdata)
     try {
       dispatch(updateadress(formdata))
       dispatch(updateadresslocally(formdata))
@@ -56,9 +54,12 @@ const ProfilePage = () => {
         action: {
           label: 'profile',
           onClick: () => router.push('/profile')
-        }
+        },
+        duration: 2000
       })
-      router.push('/profile')
+      setTimeout(() => {
+        router.push('/profile')
+      }, 2000)
     } catch {
       toast('Something went wrong', {
         action: {
@@ -103,15 +104,11 @@ const ProfilePage = () => {
       } catch (e) {
         toast('something problem in here')
       } finally {
-        console.log(adress)
         setLoading(false)
       }
     } else {
-      toast('profile and user Already exist')
-      console.log(adress)
       setLoading(false)
     }
-    console.log(profile)
   }
   useEffect(() => {
     load()
