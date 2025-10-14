@@ -117,7 +117,8 @@ const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center rounded-xl p-3 md:p-5 lg:px-18">
-      <Blurload />
+      {loading && <Blurload />}
+
       <div className="bg-white shadow-md rounded-lg p-6 w-full md:max-w-md">
         {/* profile base */}
         <div className="text-center">
