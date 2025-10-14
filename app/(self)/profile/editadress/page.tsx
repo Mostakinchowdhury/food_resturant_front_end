@@ -7,7 +7,7 @@ import { formdata_adress } from '@/type/editprofiletype'
 import countries from '@/utils/countrylist'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { MdVerified } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'sonner'
@@ -39,19 +39,55 @@ const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
     console.log(formdata)
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(formdata)
-    dispatch(updateadress(formdata))
-    dispatch(updateadresslocally(formdata))
-    toast('Address changed succesfully', {
-      action: {
-        label: 'Undo',
-        onClick: () => console.log('Undo')
-      }
-    })
-    router.push('/profile')
+    try {
+      dispatch(updateadress(formdata))
+      await dispatch(updateadresslocally(formdata))
+      toast('Address changed succesfully', {
+        action: {
+          label: 'profile',
+          onClick: () => router.push('/profile')
+        }
+      })
+      router.push('/profile')
+    } catch {
+      toast('Something went wrong', {
+        action: {
+          label: 'profile',
+          onClick: () => router.push('/profile')
+        }
+      })
+    }
   }
+
+  useEffect(() => {
+    if (!searchParams.i) {
+      toast('Sorry adress id not found Redirecting to profile in 2s', {
+        action: {
+          label: 'profile',
+          onClick: () => router.push('/profile')
+        },
+        duration: 2000
+      })
+      setTimeout(() => {
+        router.push('/profile')
+      }, 2000)
+    }
+    if (!adress) {
+      toast('Sorry adress not found Redirecting to profile in 2s', {
+        action: {
+          label: 'profile',
+          onClick: () => router.push('/profile')
+        },
+        duration: 2000
+      })
+      setTimeout(() => {
+        router.push('/profile')
+      }, 2000)
+    }
+  }, [])
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center rounded-xl p-3 md:p-5 lg:px-18">
       <div className="bg-white shadow-md rounded-lg p-6 w-full md:max-w-md">
