@@ -106,7 +106,9 @@ const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
     }
     console.log(profile)
   }
-  useEffect(() => {}, [adress, user])
+  useEffect(() => {
+    load()
+  }, [adress, user])
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center rounded-xl p-3 md:p-5 lg:px-18">
