@@ -8,19 +8,21 @@ import { fetchuser } from '@/lib/userslice'
 import { formdata_adress } from '@/type/editprofiletype'
 import countries from '@/utils/countrylist'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { MdVerified } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'sonner'
 
-const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
+const ProfilePage = () => {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const id = parseInt(searchParams.get('i') || '0')
   const profileimg =
     useSelector((state: RootState) => state.profile.profile?.profile_imag) ||
     '/deafaltprofile_square.jpg'
   const adress = useSelector((state: RootState) => state.profile.profile?.addresses)?.find(
-    (i) => i.id == parseInt(searchParams.i || '0')
+    (i) => i.id == id
   )
   const profile = useSelector((state: RootState) => state.profile.profile)
   const dispatch = useDispatch<AppDispatch>()
@@ -68,7 +70,7 @@ const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
   }
 
   useEffect(() => {
-    if (!searchParams.i) {
+    if (!searchParams.get('i')) {
       toast('Sorry adress id not found Redirecting to profile in 2s', {
         action: {
           label: 'profile',
@@ -76,22 +78,22 @@ const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
         },
         duration: 2000
       })
-      // setTimeout(() => {
-      //   router.push('/profile')
-      // }, 2000)
+      setTimeout(() => {
+        router.push('/profile')
+      }, 2000)
     }
-    // if (!adress) {
-    //   toast('Sorry adress not found Redirecting to profile in 2s', {
-    //     action: {
-    //       label: 'profile',
-    //       onClick: () => router.push('/profile')
-    //     },
-    //     duration: 2000
-    //   })
-    //   setTimeout(() => {
-    //     router.push('/profile')
-    //   }, 2000)
-    // }
+    if (!adress) {
+      toast('Sorry adress not found Redirecting to profile in 2s', {
+        action: {
+          label: 'profile',
+          onClick: () => router.push('/profile')
+        },
+        duration: 2000
+      })
+      setTimeout(() => {
+        router.push('/profile')
+      }, 2000)
+    }
   }, [])
   const load = async () => {
     if (!user || !profile) {
