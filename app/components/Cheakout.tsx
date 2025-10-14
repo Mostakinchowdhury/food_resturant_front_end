@@ -108,13 +108,15 @@ export function Add_cheakout_Dialog({ granttotal }: { granttotal: number }) {
       })
     }
   }
+  /*
   // handleSSLCommerz
-  const handleSSLCommerz = async () => {
-    setLoading(true)
-    const res = await api.post('http://127.0.0.1:8000/api/sslcommerz-checkout/2/')
-    const data = await res.data
-    router.push(data.url)
-  }
+  // const handleSSLCommer = async () => {
+  //   setLoading(true)
+  //   const res = await api.post('http://127.0.0.1:8000/api/sslcommerz-checkout/2/')
+  //   const data = await res.data
+  //   router.push(data.url)
+  // }
+  */
   useEffect(() => {
     console.log(citys)
     console.log(myphone)
@@ -269,9 +271,6 @@ export function Add_cheakout_Dialog({ granttotal }: { granttotal: number }) {
             </DialogClose>
             <Button type="submit" className="cursor-pointer">
               {Loading ? 'Loading...' : formdata.is_cashon ? 'Cash on delivery' : 'Pay now'}
-            </Button>
-            <Button onClick={handleSSLCommerz} className="cursor-pointer" type="button">
-              {Loading ? 'Proccesing' : 'Pay locally'}
             </Button>
           </DialogFooter>
         </form>
