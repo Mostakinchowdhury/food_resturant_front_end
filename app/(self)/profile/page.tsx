@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from '@/lib/configstore'
 import { deleteadress, deleteadresslocally } from '@/lib/profileslice'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect } from 'react'
 import { MdDelete, MdVerified } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'sonner'
@@ -34,6 +35,9 @@ const ProfilePage = () => {
       })
     }
   }
+  useEffect(() => {
+    console.log(profile)
+  })
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center rounded-xl p-3 md:p-5 lg:px-18">
       <div className="bg-white shadow-md rounded-lg p-6 w-full">
@@ -64,11 +68,11 @@ const ProfilePage = () => {
           </p>
         </div>
         {/* container */}
-        <main className="flex justify-center lg:justify-around items-center lg:items-stretch pt-6 flex-col md:flex-row gap-5 md:gap-12 lg:gap-24">
+        <main className="flex justify-center lg:justify-between items-center lg:items-stretch pt-6 flex-col md:flex-row gap-5 flex-wrap p-4">
           {/* left div */}
-          <div>
+          <div className="">
             {/* About me section */}
-            <div>
+            <div className="">
               <h2 className="text-size4 md:text-size5 font-bold text-orange-500 tracking-wide">
                 About Me
               </h2>
@@ -123,14 +127,13 @@ const ProfilePage = () => {
               </Link>
             </div>
           </div>
-          <div className="lg:h-[200px] rounded-lg bg-primary lg:block hidden" />
           {/* Address page */}
-          <div className="flex flex-col items-start w-full lg:block space-y-3">
+          <div className="flex flex-col items-start space-y-3 lg:block">
             <Add_adress_Dialog />
             <h2 className="text-size4 md:text-size5 font-bold text-orange-500 tracking-wide my-2">
               Address
             </h2>
-            <ul className="text-gray-700 mt-2 space-y-2">
+            <ul className="text-gray-700 mt-2 space-y-2 flex flex-col items-start">
               {Array.isArray(profile?.addresses) && profile?.addresses.length > 0
                 ? profile.addresses.map((itm, ind) => (
                     <li key={itm.id} className="flex flex-col gap-2 lg:block space-y-2">
@@ -157,7 +160,6 @@ const ProfilePage = () => {
                 : 'You dont save any addresses'}
             </ul>
           </div>
-          <div className="h-[200px] w-2 rounded-lg bg-primary anmn-1  lg:block hidden" />
           {/* right div */}
           <div className="flex flex-col justify-center items-start lg:block">
             {/* settings page */}

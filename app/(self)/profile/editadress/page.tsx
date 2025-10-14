@@ -20,6 +20,7 @@ const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
   const adress = useSelector((state: RootState) => state.profile.profile?.addresses)?.find(
     (i) => i.id == parseInt(searchParams.i || '0')
   )
+  const profile = useSelector((state: RootState) => state.profile.profile)
   const dispatch = useDispatch<AppDispatch>()
   const user = useSelector((state: RootState) => state.user.user)
 
@@ -75,19 +76,27 @@ const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
         router.push('/profile')
       }, 2000)
     }
-    if (!adress) {
-      toast('Sorry adress not found Redirecting to profile in 2s', {
-        action: {
-          label: 'profile',
-          onClick: () => router.push('/profile')
-        },
-        duration: 2000
-      })
-      setTimeout(() => {
-        router.push('/profile')
-      }, 2000)
-    }
+    // if (!adress) {
+    //   toast('Sorry adress not found Redirecting to profile in 2s', {
+    //     action: {
+    //       label: 'profile',
+    //       onClick: () => router.push('/profile')
+    //     },
+    //     duration: 2000
+    //   })
+    //   setTimeout(() => {
+    //     router.push('/profile')
+    //   }, 2000)
+    // }
   }, [])
+  useEffect(() => {
+    if (!adress && user && profile) {
+      toast('profile not found')
+      router.push('/profile')
+    }
+    console.log(profile)
+  }, [adress, user])
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center rounded-xl p-3 md:p-5 lg:px-18">
       <div className="bg-white shadow-md rounded-lg p-6 w-full md:max-w-md">
