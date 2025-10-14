@@ -1,8 +1,10 @@
 'use client'
+import Blurload from '@/components/Blurload'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { AppDispatch, RootState } from '@/lib/configstore'
-import { updateadress, updateadresslocally } from '@/lib/profileslice'
+import { fetchprofile, updateadress, updateadresslocally } from '@/lib/profileslice'
+import { fetchuser } from '@/lib/userslice'
 import { formdata_adress } from '@/type/editprofiletype'
 import countries from '@/utils/countrylist'
 import Image from 'next/image'
@@ -31,7 +33,9 @@ const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
     street: adress?.street || '',
     country: adress?.country || ''
   })
+  // loading state
 
+  const [loading, setLoading] = useState<boolean>(true)
   // handle change
   const handlechange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const name = e.target.name
@@ -45,7 +49,7 @@ const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
     console.log(formdata)
     try {
       dispatch(updateadress(formdata))
-      await dispatch(updateadresslocally(formdata))
+      dispatch(updateadresslocally(formdata))
       toast('Address changed succesfully', {
         action: {
           label: 'profile',
@@ -72,9 +76,9 @@ const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
         },
         duration: 2000
       })
-      setTimeout(() => {
-        router.push('/profile')
-      }, 2000)
+      // setTimeout(() => {
+      //   router.push('/profile')
+      // }, 2000)
     }
     // if (!adress) {
     //   toast('Sorry adress not found Redirecting to profile in 2s', {
@@ -89,16 +93,24 @@ const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
     //   }, 2000)
     // }
   }, [])
-  useEffect(() => {
-    if (!adress && user && profile) {
-      toast('profile not found')
-      router.push('/profile')
+  const load = async () => {
+    if (!user || !profile) {
+      try {
+        dispatch(fetchprofile())
+        dispatch(fetchuser())
+      } catch (e) {
+        toast('something problem in here')
+      } finally {
+        setLoading(false)
+      }
     }
     console.log(profile)
-  }, [adress, user])
+  }
+  useEffect(() => {}, [adress, user])
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center rounded-xl p-3 md:p-5 lg:px-18">
+      <Blurload />
       <div className="bg-white shadow-md rounded-lg p-6 w-full md:max-w-md">
         {/* profile base */}
         <div className="text-center">
