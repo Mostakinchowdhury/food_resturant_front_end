@@ -101,8 +101,13 @@ const ProfilePage = ({ searchParams }: { searchParams: { i?: string } }) => {
       } catch (e) {
         toast('something problem in here')
       } finally {
+        console.log(adress)
         setLoading(false)
       }
+    } else {
+      toast('profile and user Already exist')
+      console.log(adress)
+      setLoading(false)
     }
     console.log(profile)
   }
