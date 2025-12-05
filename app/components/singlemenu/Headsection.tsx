@@ -74,11 +74,7 @@ const HeadSection = async ({ product }: { product: product_type }) => {
       </div>
     )
   } catch (e) {
-    return (
-      <p className="text-red-600 font-bold">
-        {'Error loading product details.'.concat(e.message || '')}
-      </p>
-    )
+    return <p className="text-red-600 font-bold">{'Error loading product details.'}</p>
   }
 }
 

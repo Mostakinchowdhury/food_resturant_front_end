@@ -12,10 +12,20 @@ export const metadata = {
 }
 export default async function ResturantPage() {
   const url = `${process.env.BACKEND_URL}products/discount_items/`
-  const respons = await fetch(url)
-  const { results }: { results: product_type[] } = await respons.json()
-  if (!respons.ok) {
-    throw new Error('Failed to fetch data')
+
+  let results: product_type[] = []
+
+  try {
+    const respons = await fetch(url)
+
+    if (!respons.ok) {
+      throw new Error('Failed to fetch data')
+    }
+
+    const data = await respons.json()
+    results = Array.isArray(data.results) ? data.results : []
+  } catch (error) {
+    console.error('Error fetching products:', error)
   }
   try {
     return (
