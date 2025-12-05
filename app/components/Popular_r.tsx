@@ -1,20 +1,27 @@
-import { pr } from '@/lib/home_store';
-import { popular_res } from '@/type/home'
-import { Route } from 'next';
-import Link from 'next/link';
+import { TopPartnersResponse } from '@/type/apply_p'
+import axios from 'axios'
+import { Route } from 'next'
+import Link from 'next/link'
 
-const Popular_r = () => {
+const Popular_r = async () => {
+  const shops = await axios.get<TopPartnersResponse>(`${process.env.OVERVIEW}tp`)
 
   return (
     <div className="space-y-6">
-      <h3 className="font-bold text-size2 text-black md:text-size5">Popular Restaurants</h3>
+      <h3 className="font-bold text-size2 text-black md:text-size5">Popular Shops</h3>
       {/* mapping with popular resturant */}
       <div className="overflow-x-auto scroll-smooth flex gap-3 scroll-hide w-full px-3">
-        {pr.map((item: popular_res) => (
-          <Link href={item.href as Route} key={item.id} className={`w-${item.ms[0]}px h-${item.ms[1]}px`}>
+        {shops.data.top_partners.map((item) => (
+          <Link
+            href={`/shops/${encodeURIComponent(item.id)}` as Route}
+            key={item.id}
+            className={`w-${'122'}px h-${'156'}px`}
+          >
             <div
               style={{
-                backgroundImage: `url(${item.path})`
+                backgroundImage: item.buesness_logo
+                  ? `url(${process.env.ROOT?.concat(item.buesness_logo)})`
+                  : `url('/img.png')`
               }}
               className="w-[122px] h-[156px] lg:w-[238px] lg:h-[266px] bg-no-repeat bg-center bg-cover"
             ></div>

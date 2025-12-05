@@ -9,24 +9,18 @@ import Partnerwithus from './components/Partnerwithus'
 import Popular_r from './components/Popular_r'
 import Taklabanner from './components/Taklabanner'
 
-export default function Page({
-  searchParams
-}: {
-  searchParams: { category?: string; fac?: string }
-}) {
-  const category = searchParams.category || 'Pizza & Fast food'
-  const facid = parseInt(searchParams.fac || '1')
+export default function Page() {
 
   return (
     <div className="space-y-8">
       <Mobile_banner />
       <Banner />
-      <Deals category={category} />
+      <Deals/>
       <P_category />
       <Popular_r />
       <Taklabanner />
       <Partnerwithus />
-      <Fac fac={facid.toString()} />
+      <Fac/>
       <Counterblock />
     </div>
   )

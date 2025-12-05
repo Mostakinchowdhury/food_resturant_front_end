@@ -40,7 +40,7 @@ const Products = async ({
                   <h3 className="font-bold text-size3 text-txt2">
                     {process.env.NEXT_PUBLIC_CURRENCY_SYMBLE}
                     {items.price} {process.env.NEXT_PUBLIC_CURRENCY_NAME} <br />
-                    {items.max_price && items.max_price > items.price && (
+                    {items.max_price && parseFloat(items.max_price) > parseFloat(items.price) && (
                       <del className="font-bold text-size3 text-red-400">
                         {process.env.NEXT_PUBLIC_CURRENCY_SYMBLE}
                         {items.max_price} {process.env.NEXT_PUBLIC_CURRENCY_NAME}

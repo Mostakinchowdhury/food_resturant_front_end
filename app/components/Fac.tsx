@@ -1,9 +1,10 @@
+'use client'
 import { faq_nav, faq_steps } from '@/lib/home_store'
 import Image from 'next/image'
-import Link from 'next/link'
+import { useState } from 'react'
 
-const Fac = async ({ fac }: { fac?: string }) => {
-  const facID = parseInt(fac || '1')
+const Fac = () => {
+  const [facID, setfacID] = useState<number>(1)
   const question: string = faq_nav.find((i) => i.id === facID)?.title || 'How does Order.UK work?'
   return (
     <section className="lg:bg-bg5 bg-white p-4 lg:space-y-5 space-y-3 box-border">
@@ -14,7 +15,11 @@ const Fac = async ({ fac }: { fac?: string }) => {
         {/* faq navbar */}
         <nav className="flex flex-col gap-2 lg:bg-txt2 bg-transparent lg:justify-center lg:items-center lg:p-4 lg:rounded-tl-2xl lg:rounded-bl-2xl p-8 text-center">
           {faq_nav.map((item) => (
-            <Link href={`/?fac=${encodeURIComponent(item.id)}`} key={item.id}>
+            <li
+              onClick={() => setfacID(item.id)}
+              key={item.id}
+              className="cursor-pointer list-none select-none"
+            >
               <p
                 className={`font-bold text-size3 text-black p-4 rounded-3xl lg:text-white ${
                   facID === item.id ? 'bg-primary lg:text-txt' : 'bg-transparent'
@@ -22,7 +27,7 @@ const Fac = async ({ fac }: { fac?: string }) => {
               >
                 {item.title}
               </p>
-            </Link>
+            </li>
           ))}
         </nav>
 
