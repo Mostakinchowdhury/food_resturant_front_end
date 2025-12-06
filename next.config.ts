@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'backend.dayfey.store',
+        port: '',
+        pathname: '/media/**'
+      },
+      {
+        protocol: 'https',
         hostname: 'food-resturant-back-end.onrender.com',
         port: '',
         pathname: '/media/**'
