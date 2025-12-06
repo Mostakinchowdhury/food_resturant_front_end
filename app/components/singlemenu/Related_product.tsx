@@ -8,7 +8,7 @@ const RelatedProduct = async ({ products }: { products: product_type }) => {
 
   try {
     const response = await fetch(
-      `${process.env.Backend_URL}products?category=${products.category}&ordering=-added_to_cart_count`
+      `${process.env.BACKEND_URL}products?category=${products.category}&ordering=-added_to_cart_count`
     )
 
     const jresponse: { results: product_type[] } = await response.json()
