@@ -28,7 +28,7 @@ export async function generateStaticParams() {
   try {
     const response = await fetch(`${process.env.BACKEND_URL}products/`)
     const products = await response.json()
-    return products.map((product: { id: number }) => ({
+    return (products?.results || []).map((product: { id: number }) => ({
       id: product.id.toString()
     }))
   } catch (error) {
