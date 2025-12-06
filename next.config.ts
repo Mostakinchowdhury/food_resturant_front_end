@@ -23,10 +23,10 @@ const nextConfig: NextConfig = {
         pathname: '/**' // allow any path under Cloudinary
       }
     ]
-  },
-  eslint: {
-    ignoreDuringBuilds: true // build error ignore
   }
+  // eslint: {
+  //   ignoreDuringBuilds: true // build error ignore
+  // }
 }
 
 export default nextConfig
