@@ -13,6 +13,7 @@ const Products = async ({
   products: product_type[]
 }) => {
   // console.log(products);
+
   return (
     <section className="md:space-y-3.5 space-y-3 box-border">
       {category && <h3 className="font-bold text-black text-size5 lg:text-size6">{category}</h3>}
@@ -50,7 +51,8 @@ const Products = async ({
                 </div>
                 {/* image */}
                 <Link href={`/menu/${items.id}`} className="cursor-pointer h-full">
-                  {items.productimgs.filter(
+                  {Array.isArray(items.productimgs) &&
+                  items.productimgs.filter(
                     (i) => i.file_url.endsWith('.png') || i.file_url.endsWith('.jpg')
                   ).length > 0 ? (
                     <div
