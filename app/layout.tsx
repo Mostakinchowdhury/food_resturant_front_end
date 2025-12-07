@@ -5,10 +5,17 @@ import { Providers } from '@/lib/Providers'
 import type { Metadata } from 'next'
 import { Toaster } from './components/ui/sonner'
 import './globals.css'
-
+//
 export const metadata: Metadata = {
   title: 'OrderUK home page',
-  description: "It's a food website you can order food"
+  description: "It's a food website you can order food",
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fc8a06' }, // light mode
+    { media: '(prefers-color-scheme: dark)', color: '#fc8a06' } // dark mode
+  ],
+  icons: {
+    icon: '/favicon.jpg'
+  }
 }
 
 // const demoProduct = {
@@ -64,6 +71,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="theme-color" content="#fc8a06" />
+      </head>
       <body
         className={`lg:px-[80px] px-[15px] md:px-[100px] space-y-6 ${poppins.className} select-text`}
       >
