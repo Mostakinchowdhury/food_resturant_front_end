@@ -5,7 +5,7 @@ import { Providers } from '@/lib/Providers'
 import type { Metadata } from 'next'
 import { Toaster } from './components/ui/sonner'
 import './globals.css'
-//
+
 export const metadata: Metadata = {
   title: 'OrderUK home page',
   description: "It's a food website you can order food",
@@ -14,7 +14,9 @@ export const metadata: Metadata = {
     { media: '(prefers-color-scheme: dark)', color: '#fc8a06' } // dark mode
   ],
   icons: {
-    icon: '/favicon.jpg'
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png'
   }
 }
 
@@ -71,6 +73,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
       <head>
         <meta name="theme-color" content="#fc8a06" />
       </head>

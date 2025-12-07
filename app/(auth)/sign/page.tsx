@@ -223,7 +223,7 @@ const SignPage = () => {
           />
           {error.email && <p className="text-red-500 text-size1 font-normal">{error.email}</p>}
           {/* Password */}
-          <div className="flex px-4 py-3 has-focus:border-2 border-0 border-primary rounded-md bg-[#363c4c] text-size1 font-normal w-full justify-between items-center gap-3">
+          <div className="flex px-4 py-3 has-focus:border-2 border-0 border-primary rounded-md bg-[#363c4c] text-size1 font-normal w-full justify-between items-center lg:gap-3 gap-1">
             <input
               type={showPassword[0] ? 'text' : 'password'}
               placeholder="Enter your password"
@@ -233,27 +233,29 @@ const SignPage = () => {
               value={formdata.password}
               onChange={handleChange}
             />
-            {/* eye button from react icon */}
-            {!showPassword[0] ? (
-              <FaEye
-                size={22}
-                className="cursor-pointer text-gray-400 peer-focus:text-white"
-                onClick={() => handleShowPassword(0)}
-              />
-            ) : (
-              <FaEyeSlash
-                size={22}
-                className="cursor-pointer text-gray-400 peer-focus:text-white"
-                onClick={() => handleShowPassword(0)}
-              />
-            )}
+            <div className="shrink-0 flex justify-center items-center">
+              {/* eye button from react icon */}
+              {!showPassword[0] ? (
+                <FaEye
+                  size={22}
+                  className="cursor-pointer text-gray-400 peer-focus:text-white"
+                  onClick={() => handleShowPassword(0)}
+                />
+              ) : (
+                <FaEyeSlash
+                  size={22}
+                  className="cursor-pointer text-gray-400 peer-focus:text-white"
+                  onClick={() => handleShowPassword(0)}
+                />
+              )}
+            </div>
           </div>
           {error.password && (
             <p className="text-red-500 text-size1 font-normal">{error.password}</p>
           )}
           {/* confirm password */}
           {!isLogin && (
-            <div className="flex px-4 py-3 has-focus:border-2 border-0 border-primary rounded-md bg-[#363c4c] text-size1 font-normal w-full justify-between items-center gap-3">
+            <div className="flex px-4 py-3 has-focus:border-2 border-0 border-primary rounded-md bg-[#363c4c] text-size1 font-normal w-full justify-between items-center lg:gap-3 gap-1">
               <input
                 type={showPassword[1] ? 'text' : 'password'}
                 placeholder="Confirm your password"
@@ -264,7 +266,7 @@ const SignPage = () => {
                 onChange={handleChange}
               />
               {/* eye button from react icon */}
-              <div className="shrink-0">
+              <div className="shrink-0 flex justify-center items-center">
                 {!showPassword[1] ? (
                   <FaEye
                     size={22}
@@ -330,7 +332,7 @@ const SignPage = () => {
           <div className="bg-gray-400 h-[1px] grow" />
         </div>
         {/* google and facebook social login */}
-        <div className="flex justify-center items-center gap-6">
+        {/* <div className="flex justify-center items-center gap-6">
           <div className="w-10 h-10 rounded-full bg-white flex justify-center items-center cursor-pointer hover:scale-105 transition">
             <Image
               src="/google.png"
@@ -349,7 +351,7 @@ const SignPage = () => {
               className="rounded-full"
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   )
