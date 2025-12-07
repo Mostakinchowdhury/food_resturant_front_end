@@ -264,19 +264,21 @@ const SignPage = () => {
                 onChange={handleChange}
               />
               {/* eye button from react icon */}
-              {!showPassword[1] ? (
-                <FaEye
-                  size={22}
-                  className="cursor-pointer text-gray-400 peer-focus:text-white"
-                  onClick={() => handleShowPassword(1)}
-                />
-              ) : (
-                <FaEyeSlash
-                  size={22}
-                  className="cursor-pointer text-gray-400 peer-focus:text-white"
-                  onClick={() => handleShowPassword(1)}
-                />
-              )}
+              <div className="shrink-0">
+                {!showPassword[1] ? (
+                  <FaEye
+                    size={22}
+                    className="cursor-pointer text-gray-400 peer-focus:text-white"
+                    onClick={() => handleShowPassword(1)}
+                  />
+                ) : (
+                  <FaEyeSlash
+                    size={22}
+                    className="cursor-pointer text-gray-400 peer-focus:text-white"
+                    onClick={() => handleShowPassword(1)}
+                  />
+                )}
+              </div>
             </div>
           )}
           {!isLogin && error.password2 && (

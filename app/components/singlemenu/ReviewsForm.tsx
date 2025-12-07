@@ -29,7 +29,7 @@ export default function ReviewsForm({ productId }: { productId: number }) {
       }
       setrateddict({ is_rated: false, rated: 0 })
     } catch (e: Error | any) {
-      toast.error(e.message || 'Error checking rating status')
+      console.log(e.message || 'Error checking rating status')
     } finally {
       setLoading(false)
     }
@@ -84,7 +84,9 @@ export default function ReviewsForm({ productId }: { productId: number }) {
     }
   }
   useEffect(() => {
-    fetchPurchaseStatus()
+    if (authenticated) {
+      fetchPurchaseStatus()
+    }
     fetchRatingStatus()
   }, [])
   if (!authenticated) {

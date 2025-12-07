@@ -41,7 +41,6 @@ const Counterblock = async () => {
       </div>
     )
   } catch (err) {
-    console.log(err)
     return (
       <div>
         <h1>Product not found</h1>

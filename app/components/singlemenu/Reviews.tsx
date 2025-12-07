@@ -22,7 +22,6 @@ const Reviews = ({ product }: { product: product_type }) => {
   const prop = { productId: product.id }
   const [reviews, setreviews] = useState<ProductReviewType[]>([])
   const [rText, setrText] = useState<string>('')
-  /*reviews.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())*/
 
   //  handle update
 

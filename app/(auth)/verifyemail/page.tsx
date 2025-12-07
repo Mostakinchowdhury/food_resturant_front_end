@@ -2,13 +2,13 @@
 import { poppins } from '@/components/Navbar'
 import { field_type } from '@/type/auth'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
-const SignPage = ({ searchParams }: { searchParams: { email: string } }) => {
+const SignPage = () => {
   const router = useRouter()
-  const email = searchParams.email || ''
+  const email = useSearchParams().get('email') || ''
   const myForm = useRef<HTMLFormElement | null>(null)
   const [formdata, setFormdata] = useState<field_type>({
     field1: '',

@@ -8,7 +8,8 @@ export const revalidate = 900
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   try {
-    const response = await fetch(`${process.env.BACKEND_URL}products/${params.id}`)
+    const { id } = await params
+    const response = await fetch(`${process.env.BACKEND_URL}products/${parseInt(id)}`)
     const product = await response.json()
     return {
       title: product.name,
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 // genaret static params for SSG
 export async function generateStaticParams() {
   try {
-    const response = await fetch(`${process.env.BACKEND_URL}products/`)
+    const response = await fetch(`${process.env.BACKEND_URL}products/}`)
     const products = await response.json()
     return (products?.results || []).map((product: { id: number }) => ({
       id: product.id.toString()
@@ -39,9 +40,10 @@ export async function generateStaticParams() {
 
 export default async function ProductPage({ params }: { params: { id: string } }) {
   try {
-    const response = await fetch(`${process.env.BACKEND_URL}products/${params.id}`)
+    const { id } = await params
+    const response = await fetch(`${process.env.BACKEND_URL}products/${parseInt(id)}`)
     const result: product_type = await response.json()
-
+    console.log(result)
     return (
       <>
         <HeadSection product={result} />
@@ -50,7 +52,6 @@ export default async function ProductPage({ params }: { params: { id: string } }
       </>
     )
   } catch (error) {
-    console.error('Error fetching product details:', error)
     return (
       <div>
         <h1>Product not found</h1>

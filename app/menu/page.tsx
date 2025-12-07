@@ -16,10 +16,11 @@ export default async function ResturantPage({
 }: {
   searchParams: { category?: string; search?: string; tag?: string }
 }) {
-  const category = searchParams.category || 'All'
-  const qcategory = searchParams.category || ''
-  const serch = searchParams.search || ''
-  const tag = searchParams.tag || ''
+  const srcp = await searchParams
+  const category = srcp.category || 'All'
+  const qcategory = srcp.category || ''
+  const serch = srcp.search || ''
+  const tag = srcp.tag || ''
   let url = `${process.env.BACKEND_URL}products/?search=${serch}`
   if (qcategory) {
     url += `&category=${qcategory}`

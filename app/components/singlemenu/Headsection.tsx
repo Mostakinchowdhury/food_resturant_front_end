@@ -13,8 +13,6 @@ const HeadSection = async ({ product }: { product: product_type }) => {
       `${process.env.OVERVIEW}apr/?product_id=${encodeURIComponent(product.id)}`
     )
     product = { ...product, ...avgRating.data }
-    console.log('from singe')
-    console.log(product)
     return (
       <div
         className={`flex flex-col md:flex-row items-stretch md:gap-10 gap-4 p-4 bg-white shadow-md rounded-lg ${poppins.className}`}
