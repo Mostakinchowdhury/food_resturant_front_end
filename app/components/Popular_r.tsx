@@ -20,7 +20,7 @@ const Popular_r = async () => {
             <div
               style={{
                 backgroundImage: item.buesness_logo_url
-                  ? `url(${process.env.ROOT?.concat(item.buesness_logo_url)})`
+                  ? `url(${item.buesness_logo_url})`
                   : `url('/img.png')`
               }}
               className="w-[122px] h-[156px] lg:w-[238px] lg:h-[266px] bg-no-repeat bg-center bg-cover"
