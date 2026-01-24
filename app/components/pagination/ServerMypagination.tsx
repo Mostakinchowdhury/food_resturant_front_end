@@ -33,7 +33,12 @@ export default function ServerMypagination({
           asChild
           className="manrope txtstlh3 font-extrabold text-white focus-visible:ring-0 focus:ring-0 hover:bg-green-500 bg-amber-400"
         >
-          <Link href={`/${fromVal}?page=${Math.max(1, pageNum - 1)}`}>
+          <Link
+            href={{
+              pathname: `/${fromVal}`,
+              query: { page: Math.max(1, pageNum - 1) },
+            }}
+          >
             <MdSkipPrevious />
             Previous
           </Link>
@@ -53,7 +58,14 @@ export default function ServerMypagination({
                   pageNum == i + 1 ? 'bg-green-600' : 'bg-primary'
                 }`}
               >
-                <Link href={`/${fromVal}?page=${i + 1}`}>{i + 1}</Link>
+                <Link
+                  href={{
+                    pathname: `/${fromVal}`,
+                    query: { page: i + 1 },
+                  }}
+                >
+                  {i + 1}
+                </Link>
               </Button>
             ))
         ) : (
@@ -63,7 +75,14 @@ export default function ServerMypagination({
               pageNum == 1 ? 'bg-green-600' : 'bg-primary'
             }`}
           >
-            <Link href={`/${fromVal}?page=1`}>1</Link>
+            <Link
+              href={{
+                pathname: `/${fromVal}`,
+                query: { page: 1 },
+              }}
+            >
+              1
+            </Link>
           </Button>
         ))}
       {/* 3 by condition */}
@@ -74,18 +93,30 @@ export default function ServerMypagination({
             pageNum == 3 ? 'bg-green-600' : 'bg-primary'
           }`}
         >
-          <Link href={`/${fromVal}?page=3`}>3</Link>
+          <Link
+            href={{
+              pathname: `/${fromVal}`,
+              query: { page: 3 },
+            }}
+          >
+            3
+          </Link>
         </Button>
       )}
       {/* 4 by condition */}
       {pageNum == 3 && totalPagesNum > 5 && (
         <Button
           asChild
-          className={`manrope txtstlh3 font-extrabold text-white focus-visible:ring-0 focus:ring-0 hover:bg-blue-600 ${
-            pageNum == 4 ? 'bg-green-600' : 'bg-primary'
-          }`}
+          className={`manrope txtstlh3 font-extrabold text-white focus-visible:ring-0 focus:ring-0 hover:bg-blue-600 bg-primary`}
         >
-          <Link href={`/${fromVal}?page=4`}>4</Link>
+          <Link
+            href={{
+              pathname: `/${fromVal}`,
+              query: { page: 4 },
+            }}
+          >
+            4
+          </Link>
         </Button>
       )}
       {ldot && (
@@ -103,7 +134,14 @@ export default function ServerMypagination({
               pageNum == i ? 'bg-green-600' : 'bg-primary'
             }`}
           >
-            <Link href={`/${fromVal}?page=${i}`}>{i}</Link>
+            <Link
+              href={{
+                pathname: `/${fromVal}`,
+                query: { page: i },
+              }}
+            >
+              {i}
+            </Link>
           </Button>
         ))}
       {ldot &&
@@ -117,7 +155,14 @@ export default function ServerMypagination({
               pageNum == i ? 'bg-green-600' : 'bg-primary'
             }`}
           >
-            <Link href={`/${fromVal}?page=${i}`}>{i}</Link>
+            <Link
+              href={{
+                pathname: `/${fromVal}`,
+                query: { page: i },
+              }}
+            >
+              {i}
+            </Link>
           </Button>
         ))}
       {rdot && (
@@ -132,7 +177,12 @@ export default function ServerMypagination({
             pageNum == totalPagesNum ? 'bg-green-500' : 'bg-primary'
           }`}
         >
-          <Link href={`/${fromVal}?page=${totalPagesNum}`}>
+          <Link
+            href={{
+              pathname: `/${fromVal}`,
+              query: { page: totalPagesNum },
+            }}
+          >
             {totalPagesNum}
           </Link>
         </Button>
@@ -143,7 +193,10 @@ export default function ServerMypagination({
           className="manrope txtstlh3 font-extrabold text-white focus-visible:ring-0 focus:ring-0 hover:bg-green-500 bg-amber-400"
         >
           <Link
-            href={`/${fromVal}?page=${Math.min(totalPagesNum, pageNum + 1)}`}
+            href={{
+              pathname: `/${fromVal}`,
+              query: { page: Math.min(totalPagesNum, pageNum + 1) },
+            }}
           >
             Next <MdSkipNext />
           </Link>
