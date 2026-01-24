@@ -29,7 +29,7 @@ export default async function ResturantPage({
   const page = srcp.page || 1;
   const serch = srcp.search || '';
   const tag = srcp.tag || '';
-  let url = `${process.env.BACKEND_URL}products/?search=${serch}&page=${page}&page_size=2`;
+  let url = `${process.env.BACKEND_URL}products/?search=${serch}&page=${page}`;
   if (qcategory) {
     url += `&category=${qcategory}`;
   }

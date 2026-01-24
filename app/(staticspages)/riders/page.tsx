@@ -37,7 +37,7 @@ const ShopsPage = () => {
     setLoading(true);
     try {
       const res = await axios.get<RidersResponse>(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}riders?search=${encodeURIComponent(search)}&page=${page}&page_size=2`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}riders?search=${encodeURIComponent(search)}&page=${page}`,
       ); // DRF endpoint
       const data = res.data;
       setShops(data.results);
