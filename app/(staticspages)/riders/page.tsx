@@ -1,48 +1,52 @@
-'use client'
+'use client';
 
-import Blurload from '@/components/Blurload'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { ApplyRider } from '@/type/applyrider'
-import axios from 'axios'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
-import { FaPhoneSquareAlt } from 'react-icons/fa'
-import { GrStatusGoodSmall } from 'react-icons/gr'
-import { IoCheckmarkDoneCircleSharp, IoLocationSharp } from 'react-icons/io5'
-import { MdCancel, MdOutlineDriveFileRenameOutline } from 'react-icons/md'
-import { toast } from 'sonner'
+import Blurload from '@/components/Blurload';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { ApplyRider, RidersResponse } from '@/type/applyrider';
+import axios from 'axios';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
+import { FaPhoneSquareAlt } from 'react-icons/fa';
+import { GrStatusGoodSmall } from 'react-icons/gr';
+import { IoCheckmarkDoneCircleSharp, IoLocationSharp } from 'react-icons/io5';
+import { MdCancel, MdOutlineDriveFileRenameOutline } from 'react-icons/md';
+import { toast } from 'sonner';
+import Mypagination from '@/components/pagination/Mypagination';
 
 const ShopsPage = () => {
-  const btn = useRef<HTMLButtonElement | null>(null)
-  const [shops, setShops] = useState<ApplyRider[]>([])
-  const [searchTerm, setSearchTerm] = useState('')
-  const [loading, setLoading] = useState(true)
+  const btn = useRef<HTMLButtonElement | null>(null);
+  const [shops, setShops] = useState<ApplyRider[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [page, setpage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      e.preventDefault()
-      btn.current?.click()
+      e.preventDefault();
+      btn.current?.click();
     }
-  }
+  };
 
   useEffect(() => {
-    fetchRider('')
-  }, [])
+    fetchRider('');
+  }, [page]);
 
   const fetchRider = async (search: string) => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const res = await axios.get<ApplyRider[]>(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}riders?search=${encodeURIComponent(search)}`
-      ) // DRF endpoint
-      const data = res.data
-      setShops(data)
+      const res = await axios.get<RidersResponse>(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}riders?search=${encodeURIComponent(search)}&page=${page}&page_size=2`,
+      ); // DRF endpoint
+      const data = res.data;
+      setShops(data.results);
+      setTotalPage(data.total_pages);
     } catch (error) {
-      toast(`Error fetching riders:${error as string}`)
+      toast(`Error fetching riders:${error as string}`);
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <div className="py-4 mx-auto">
@@ -56,7 +60,7 @@ const ShopsPage = () => {
           type="text"
           placeholder="Search by name or address or phone number..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
           onKeyDown={handleKey}
           className="w-full pl-8 rounded-lg focus:outline-none focus-visible:outline-0 focus-visible:border-0 focus-visible:ring-0 border-0 focus:border-0 focus:ring-0 focus:outline-0 shadow-none lg:text-2xl lg:placeholder:text-2xl font-semibold text-txt2"
         />
@@ -75,7 +79,7 @@ const ShopsPage = () => {
         <p className="text-center my-6">No Riders found.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-4">
-          {shops.map((riders) => (
+          {shops.map(riders => (
             <div
               key={riders.id}
               className="rounded-xl p-2 flex flex-col items-center shadow hover:shadow-lg transition bg-gray-100 py-4"
@@ -125,8 +129,8 @@ const ShopsPage = () => {
                   riders.status === 'PENDING'
                     ? 'text-yellow-500'
                     : riders.status === 'APPROVED'
-                    ? 'text-green-500'
-                    : 'text-red-500'
+                      ? 'text-green-500'
+                      : 'text-red-500'
                 }`}
               >
                 <span>
@@ -144,8 +148,9 @@ const ShopsPage = () => {
           ))}
         </div>
       )}
+      <Mypagination page={page} setpage={setpage} totalpages={totalPage} />
     </div>
-  )
-}
+  );
+};
 
-export default ShopsPage
+export default ShopsPage;

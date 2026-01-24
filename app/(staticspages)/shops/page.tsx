@@ -1,41 +1,45 @@
-'use client'
+'use client';
 
-import Blurload from '@/components/Blurload'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Shop } from '@/type/bueness'
-import axios from 'axios'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { FaShopLock } from 'react-icons/fa6'
-import { GrStatusGoodSmall } from 'react-icons/gr'
-import { IoCheckmarkDoneCircleSharp, IoLocationSharp } from 'react-icons/io5'
-import { MdCancel } from 'react-icons/md'
-import { toast } from 'sonner'
+import Blurload from '@/components/Blurload';
+import Mypagination from '@/components/pagination/Mypagination';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Shop, ShopResponse } from '@/type/bueness';
+import axios from 'axios';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { FaShopLock } from 'react-icons/fa6';
+import { GrStatusGoodSmall } from 'react-icons/gr';
+import { IoCheckmarkDoneCircleSharp, IoLocationSharp } from 'react-icons/io5';
+import { MdCancel } from 'react-icons/md';
+import { toast } from 'sonner';
 
 const ShopsPage = () => {
-  const [shops, setShops] = useState<Shop[]>([])
-  const [searchTerm, setSearchTerm] = useState('')
-  const [loading, setLoading] = useState(true)
+  const [shops, setShops] = useState<Shop[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [page, setpage] = useState(1);
+  const [totalpages, settotalpages] = useState(1);
 
   useEffect(() => {
-    fetchShops('')
-  }, [])
+    fetchShops('');
+  }, [page]);
 
   const fetchShops = async (search: string) => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}shops?search=${encodeURIComponent(search)}`
-      ) // DRF endpoint
-      const data = res.data
-      setShops(data)
+      const res = await axios.get<ShopResponse>(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}shops?search=${encodeURIComponent(search)}&page=${page}&page_size=3`,
+      ); // DRF endpoint
+      const data = res.data;
+      setShops(data.results);
+      settotalpages(data.total_pages);
     } catch (error) {
-      toast(`Error fetching shops:${error as string}`)
+      toast(`Error fetching shops:${error as string}`);
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <div className="py-4 mx-auto">
@@ -49,7 +53,7 @@ const ShopsPage = () => {
           type="text"
           placeholder="Search by name or address..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
           className="w-full pl-8 rounded-lg focus:outline-none focus-visible:outline-0 focus-visible:border-0 focus-visible:ring-0 border-0 focus:border-0 focus:ring-0 focus:outline-0 shadow-none lg:text-2xl lg:placeholder:text-2xl font-semibold text-txt2"
         />
         <Button
@@ -66,7 +70,7 @@ const ShopsPage = () => {
         <p className="text-center my-6">No shops found.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-4">
-          {shops.map((shop) => (
+          {shops.map(shop => (
             <div
               key={shop.id}
               className="rounded-xl p-2 flex flex-col items-center shadow hover:shadow-lg transition bg-gray-100 py-4"
@@ -110,8 +114,8 @@ const ShopsPage = () => {
                   shop.status === 'PENDING'
                     ? 'text-yellow-500'
                     : shop.status === 'APPROVED'
-                    ? 'text-green-500'
-                    : 'text-red-500'
+                      ? 'text-green-500'
+                      : 'text-red-500'
                 }`}
               >
                 <span>
@@ -129,8 +133,9 @@ const ShopsPage = () => {
           ))}
         </div>
       )}
+      <Mypagination page={page} setpage={setpage} totalpages={totalpages} />
     </div>
-  )
-}
+  );
+};
 
-export default ShopsPage
+export default ShopsPage;
