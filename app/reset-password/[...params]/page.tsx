@@ -13,14 +13,10 @@ import { toast } from 'sonner';
 
 const ChangePasswordpage = () => {
   const searchParams = useSearchParams();
-  const uid = searchParams.get('uid') || '';
-  const token = searchParams.get('token') || '';
+  const [uid, token] = searchParams.get('params') || ['', ''];
+  const uid2 = searchParams.get('uid') || '';
+  const token2 = searchParams.get('token') || '';
   const router = useRouter();
-  // const profileimg =
-  //   useSelector((state: RootState) => state.profile.profile?.profile_image) ||
-  //   '/deafaltprofile_square.jpg'
-  // const user = useSelector((state: RootState) => state.user.user)
-  // loading state
   const [loading, setloading] = useState<boolean>(false);
   // Error state
   // formdata state
@@ -112,7 +108,8 @@ const ChangePasswordpage = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center rounded-xl p-3 md:p-5 lg:px-18">
       <div className="bg-white shadow-md rounded-lg p-6 w-full md:max-w-md">
         <h1 className="text-center text-size5 text-primary font-bold border-b-3 px-2 w-fit mx-auto">
-          Reset Your Password
+          Reset Your Password{' '}
+          {`uid2 is ${uid2} and token2 is ${token2} uid is ${uid} and token is ${token}`}
         </h1>
         {/* contact section */}
         <section className="mt-10 space-y-2">
