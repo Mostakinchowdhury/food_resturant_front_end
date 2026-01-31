@@ -1,108 +1,112 @@
-'use client'
-import LoadingLoader from '@/components/Loader'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { logout } from '@/lib/authcreateslice'
-import { AppDispatch } from '@/lib/configstore'
-import { formdata_resetpassword } from '@/type/editprofiletype'
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import { ChangeEvent, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { toast } from 'sonner'
+'use client';
+import LoadingLoader from '@/components/Loader';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { logout } from '@/lib/authcreateslice';
+import { AppDispatch } from '@/lib/configstore';
+import { formdata_resetpassword } from '@/type/editprofiletype';
+import axios from 'axios';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { ChangeEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
 
-const ChangePasswordpage = ({ params }: { params: { params: string[] } }) => {
-  const [uid, token] = params.params
-  const router = useRouter()
+const ChangePasswordpage = () => {
+  const searchParams = useSearchParams();
+  const uid = searchParams.get('uid') || '';
+  const token = searchParams.get('token') || '';
+  const router = useRouter();
   // const profileimg =
   //   useSelector((state: RootState) => state.profile.profile?.profile_image) ||
   //   '/deafaltprofile_square.jpg'
   // const user = useSelector((state: RootState) => state.user.user)
   // loading state
-  const [loading, setloading] = useState<boolean>(false)
+  const [loading, setloading] = useState<boolean>(false);
   // Error state
   // formdata state
   const [formdata, setformdata] = useState<formdata_resetpassword>({
     password: '',
     confirm_password: '',
     token: token,
-    uidb64: uid
-  })
+    uidb64: uid,
+  });
 
   // dispatch
 
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
 
   // handle change
-  const handlechange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const name = e.target.name
-    const value = e.target.value
-    setformdata((data) => ({ ...data, [name]: value }))
-    console.log(formdata)
-  }
+  const handlechange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setformdata(data => ({ ...data, [name]: value }));
+    console.log(formdata);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setloading(true)
-    console.log(formdata)
+    e.preventDefault();
+    setloading(true);
+    console.log(formdata);
     try {
       const response = await axios.post<object>(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}auth/reset-password-confirm/`,
         formdata,
         {
-          validateStatus: () => true
-        }
-      )
+          validateStatus: () => true,
+        },
+      );
       if (!(response.status == 200 || response.status == 201)) {
-        setloading(false)
-        console.log(response.data)
+        setloading(false);
+        console.log(response.data);
         toast(Object.values(response.data).flat()[0], {
           action: {
             label: 'Undo',
             onClick: () => {
-              console.log('remove notice')
-            }
-          }
-        })
-        return
+              console.log('remove notice');
+            },
+          },
+        });
+        return;
       }
-      setloading(false)
+      setloading(false);
       toast(Object.values(response.data).flat()[0], {
         action: {
           label: 'Undo',
           onClick: () => {
-            console.log('remove notice')
-          }
-        }
-      })
-      dispatch(logout())
-      router.push('/sign')
+            console.log('remove notice');
+          },
+        },
+      });
+      dispatch(logout());
+      router.push('/sign');
     } catch (error) {
-      setloading(false)
-      console.log()
+      setloading(false);
+      console.log();
       if (error instanceof Error) {
         toast(error.message, {
           action: {
             label: 'Undo',
             onClick: () => {
-              console.log('remove notice')
-            }
-          }
-        })
+              console.log('remove notice');
+            },
+          },
+        });
       } else {
         toast('Sorry something went wrong please contact with us', {
           action: {
             label: 'Undo',
             onClick: () => {
-              console.log('remove notice')
-            }
-          }
-        })
+              console.log('remove notice');
+            },
+          },
+        });
       }
     }
-  }
+  };
   if (loading) {
-    return <LoadingLoader />
+    return <LoadingLoader />;
   }
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center rounded-xl p-3 md:p-5 lg:px-18">
@@ -119,7 +123,9 @@ const ChangePasswordpage = ({ params }: { params: { params: string[] } }) => {
             onSubmit={handleSubmit}
           >
             <div className="flex flex-col gap-2">
-              <label className="text-primary font-bold text-size3">Password</label>
+              <label className="text-primary font-bold text-size3">
+                Password
+              </label>
               <Input
                 value={formdata.password || ''}
                 name="password"
@@ -130,7 +136,9 @@ const ChangePasswordpage = ({ params }: { params: { params: string[] } }) => {
                 required
               />
             </div>
-            <label className="text-primary font-bold text-size3 block">Confirm Password</label>
+            <label className="text-primary font-bold text-size3 block">
+              Confirm Password
+            </label>
             <Input
               value={formdata.confirm_password || ''}
               name="confirm_password"
@@ -140,14 +148,17 @@ const ChangePasswordpage = ({ params }: { params: { params: string[] } }) => {
               type="text"
               required
             />
-            <Button type="submit" className="tracking-wider cursor-pointer block">
+            <Button
+              type="submit"
+              className="tracking-wider cursor-pointer block"
+            >
               Reset Password
             </Button>
           </form>
         </section>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChangePasswordpage
+export default ChangePasswordpage;
