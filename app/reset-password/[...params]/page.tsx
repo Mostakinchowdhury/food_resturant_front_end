@@ -6,17 +6,18 @@ import { logout } from '@/lib/authcreateslice';
 import { AppDispatch } from '@/lib/configstore';
 import { formdata_resetpassword } from '@/type/editprofiletype';
 import axios from 'axios';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 
 const ChangePasswordpage = () => {
-  const searchParams = useSearchParams();
-  const [uid, token] = searchParams.get('params') || ['', ''];
-  const uid2 = searchParams.get('uid') || '';
-  const token2 = searchParams.get('token') || '';
+  const params = useParams();
   const router = useRouter();
+  const [uid, token] = params.params || ['', ''];
+
+  console.log('UID:', uid);
+  console.log('Token:', token);
   const [loading, setloading] = useState<boolean>(false);
   // Error state
   // formdata state
@@ -109,7 +110,6 @@ const ChangePasswordpage = () => {
       <div className="bg-white shadow-md rounded-lg p-6 w-full md:max-w-md">
         <h1 className="text-center text-size5 text-primary font-bold border-b-3 px-2 w-fit mx-auto">
           Reset Your Password{' '}
-          {`uid2 is ${uid2} and token2 is ${token2} uid is ${uid} and token is ${token}`}
         </h1>
         {/* contact section */}
         <section className="mt-10 space-y-2">
