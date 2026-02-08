@@ -1,6 +1,7 @@
 import { top6cattype } from '@/type/overview';
 import axios from 'axios';
 import { Route } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 
 const P_category = async () => {
@@ -21,12 +22,14 @@ const P_category = async () => {
                 ('/menu?category=' + encodeURIComponent(item.name)) as Route
               }
             >
-              <div
-                style={{
-                  backgroundImage: `url('${item.image_url || '/img.png'}')`,
-                }}
-                className="bg-no-repeat bg-center bg-cover w-full h-[161px] lg:[203px]"
-              />
+              <div className="relative bg-no-repeat bg-center bg-cover w-full h-[161px] lg:[203px] overflow-hidden">
+                <Image
+                  src={item.image_url ?? '/img.png'}
+                  alt={item.name}
+                  fill
+                  className="absolute inset-0 object-cover"
+                />
+              </div>
             </Link>
             {/* food detail */}
             <div className="bg-txt2 lg:py-4 py-3 px-4 lg:px-5 flex flex-col items-start justify-center gap-1">
